@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { redHatText } from "./font";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,7 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${redHatText.className}`}>{children}</body>
+      <body className={`${redHatText.className}`}>
+        <ThemeProvider attribute={"class"} defaultTheme="light">
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
