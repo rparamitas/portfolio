@@ -4,7 +4,17 @@
 
 :root {
   --main: #fd9745;
-  --overlay: rgba(0, 0, 0, 0.8); /* background color overlay for alert dialogs, modals, etc. */
+  --overlay: rgba(
+    0,
+    0,
+    0,
+    0.8
+  ); /* background color overlay for alert dialogs, modals, etc. */
+  --blue: #8ea9ee;
+  --yellow: #fadd5a;
+  --red: #f6706d;
+  --green: #a8e636;
+  --purple: #a388ee;
 
   --bg: #fff4e0;
   --bw: #fff; /* white and secondary black e.g. utility class variant would be: bg-[#fff] dark:bg-[#212121] */
