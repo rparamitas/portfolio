@@ -1,16 +1,15 @@
 import React from "react";
 import { Card, CardContent } from "./ui/card";
 import Image, { StaticImageData } from "next/image";
-import logo from "@/public/vercel.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-import PhotoProfile from "@/public/my-photo.png";
-import PillarsLogo from "@/public/PillarsLogo.avif";
+import PillarsLogo from "@/public/PillarsLogo.png";
 import HarveyPhoto from "@/public/HarveyPhoto.jpeg";
 import DermaLogo from "@/public/DermaLogo.jpg";
 import PriyonoPhoto from "@/public/BlankPhotoProfile.webp";
 import GlowLogo from "@/public/GlowLogo.png";
 import GhinaPhoto from "@/public/GhinaPhoto.jpeg";
+import { cn } from "@/lib/utils";
 
 interface TestimonialProps {
   id: number;
@@ -56,33 +55,47 @@ const data: TestimonialProps[] = [
 
 const Testimonial = () => {
   return (
-    <Card className="max-w-sm">
-      <CardContent>
-        <div className="flex flex-col gap-y-4 pt-6">
-          <p className="leading-relaxed tracking-wide">
-            &quot;We love Landingfollo! Our designers were using ot for their
-            projects, so client already knew what Landingfollo was and how to
-            use it.&quot;
-          </p>
-          <div className="flex flex-col">
-            <p className="font-bold">Bessie Cooper</p>
-            <p>Co-Founder, CEO</p>
-          </div>
-          <div className="flex h-14 justify-between">
-            <Image
-              src={logo}
-              alt="logo"
-              width={100}
-              className="overflow-hidden"
-            />
-            <Avatar className="flex self-center">
-              <AvatarImage src={PhotoProfile.src} alt="rahmita" />
-              <AvatarFallback>RP</AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="">
+      <div className="flex flex-row gap-x-12">
+        {data.map((item) => (
+          <Card
+            key={item.id}
+            className={cn(item.id % 2 === 0 ? "rotate-6 bg-bw" : "-rotate-6")}
+          >
+            <CardContent className="">
+              <div className="flex flex-col gap-y-8 pt-6">
+                <p className="leading-relaxed tracking-wide">
+                  {item.testimonial}
+                </p>
+                <div className="flex flex-col">
+                  <p className="font-bold">{item.name}</p>
+                  <p>{item.position}</p>
+                </div>
+                <div className="flex flex-row justify-between">
+                  <Image
+                    src={item.logo || defaultLogo}
+                    alt="logo"
+                    width={100}
+                    className="overflow-hidden"
+                  />
+                  <Avatar className="flex size-20 self-center">
+                    <AvatarImage
+                      src={
+                        typeof item.photo === "string"
+                          ? item.photo
+                          : item.photo?.src || defaultPhoto
+                      }
+                      alt="rahmita"
+                    />
+                    <AvatarFallback>{item.name[0]}</AvatarFallback>
+                  </Avatar>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
   );
 };
 

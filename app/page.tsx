@@ -1,14 +1,14 @@
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import PhotoProfile from "@/public/my-photo.png";
 import Testimonial from "@/components/testimonial";
+import MyJobs from "@/components/my-jobs";
 
 export default function Home() {
   return (
     <div>
       <div className="flex items-center justify-center bg-bg">
-        <div className="container flex items-center justify-between gap-x-16 border border-black">
-          <div className="border-blue-500 flex h-full flex-1 flex-col justify-center border">
+        <div className="container flex items-center justify-between gap-x-16">
+          <div className="flex h-full flex-1 flex-col justify-center">
             <p>Hi, my name is Rahmita Paramita Sudirman</p>
             <h1 className="text-wrap text-7xl font-bold">
               I create solutions for beauty growth.
@@ -20,7 +20,7 @@ export default function Home() {
               10000+ pcs in each month.
             </p>
           </div>
-          <div className="border-red-500 flex flex-1 items-center justify-center border">
+          <div className="flex flex-1 items-center justify-center">
             <div className="relative h-[700px] w-full">
               <Image
                 src={PhotoProfile}
@@ -37,11 +37,25 @@ export default function Home() {
         </div>
       </div>
       <div className="flex items-center justify-center bg-bw">
-        <div className="container flex flex-col border border-black">
-          <div className="flex flex-col">
-            <h2>Don&apos;t just take our words. Over 1000+ people trust me.</h2>
+        <div className="container flex flex-col py-20">
+          <div className="flex flex-col gap-y-24">
+            <h2 className="text-center text-3xl font-bold">
+              Don&apos;t just take our words. Over 1000+ people trust me.
+            </h2>
             <div className="flex flex-row">
               <Testimonial />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center bg-bg">
+        <div className="container flex flex-col py-20">
+          <div className="flex flex-col gap-y-24">
+            <h2 className="text-center text-4xl font-bold">
+              What I can do for you
+            </h2>
+            <div>
+              <MyJobs />
             </div>
           </div>
         </div>
