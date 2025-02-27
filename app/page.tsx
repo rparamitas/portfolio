@@ -1,7 +1,63 @@
+"use client";
+
 import Image from "next/image";
 import PhotoProfile from "@/public/my-photo.png";
 import Testimonial from "@/components/testimonial";
 import MyJobs from "@/components/my-jobs";
+import { Projects } from "@/data/projects";
+import { cn } from "@/lib/utils";
+// import { Item } from "@radix-ui/react-dropdown-menu";
+import Link from "next/link";
+// import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
+
+// const content = [
+//   {
+//     title: "Collaborative Editing",
+//     description:
+//       "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
+//     content: (
+//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+//         Collaborative Editing
+//       </div>
+//     ),
+//   },
+//   {
+//     title: "Real time changes",
+//     description:
+//       "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
+//     content: (
+//       <div className="flex h-full w-full items-center justify-center text-white">
+//         <Image
+//           src={PhotoProfile}
+//           width={300}
+//           height={300}
+//           className="h-full w-full object-cover"
+//           alt="linear board demo"
+//         />
+//       </div>
+//     ),
+//   },
+//   {
+//     title: "Version control",
+//     description:
+//       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+//     content: (
+//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
+//         Version control
+//       </div>
+//     ),
+//   },
+//   {
+//     title: "Running out of content",
+//     description:
+//       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
+//     content: (
+//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
+//         Running out of content
+//       </div>
+//     ),
+//   },
+// ];
 
 export default function Home() {
   return (
@@ -56,6 +112,47 @@ export default function Home() {
             </h2>
             <div>
               <MyJobs />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex items-center justify-center border bg-bw">
+        <div className="container flex flex-col py-20">
+          <div className="flex flex-col gap-y-24">
+            <h2 className="text-center text-3xl font-bold">
+              Featured Projects
+            </h2>
+            <div className="relative">
+              {/* <StickyScroll content={content} /> */}
+              <div className="flex flex-col gap-y-8">
+                {Projects.map((project, index) => (
+                  <div
+                    key={index}
+                    className={cn(
+                      "flex w-full flex-row items-center justify-center gap-x-8 border border-black",
+                      index % 2 === 0 ? "flex-row-reverse" : "flex-row",
+                    )}
+                  >
+                    <div className="border border-blue">
+                      <Image src={project.image} alt={project.title} />
+                    </div>
+                    <div className="flex flex-col">
+                      <p className="flex flex-row gap-x-2">
+                        {project.category?.map((item) => (
+                          <span key={item} className="rounded-full border">
+                            <span>{item}</span>
+                          </span>
+                        ))}
+                      </p>
+                      <p>{project.title}</p>
+                      <p>{project.description}</p>
+                      {project.link && (
+                        <Link href={project.link}>{project.title}</Link>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-import { Red_Hat_Text } from "next/font/google";
+import { Josefin_Sans, Red_Hat_Text } from "next/font/google";
 import localFont from "next/font/local";
 
 export const geistSans = localFont({
@@ -13,6 +13,12 @@ export const geistMono = localFont({
 });
 
 export const redHatText = Red_Hat_Text({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+export const josefinSans = Josefin_Sans({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500", "600", "700"],

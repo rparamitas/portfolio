@@ -3,6 +3,7 @@
 import { listPage } from "@/config/site";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
+import { Logo } from "./footer";
 
 const Navbar = () => {
   const route = useRouter();
@@ -14,8 +15,8 @@ const Navbar = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <nav className="container flex h-12 items-center justify-between border">
-        <div>Logo</div>
+      <nav className="container flex h-12 items-center justify-between">
+        <Logo />
         <ul className="flex flex-row space-x-4 text-lg">
           {listPage.map((item) => (
             <li

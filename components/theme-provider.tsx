@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import Navbar from "./navbar";
 import Footer from "./footer";
+import { TooltipProvider } from "./ui/tooltip";
 
 export function ThemeProvider({
   children,
@@ -19,9 +20,11 @@ export function ThemeProvider({
 
   return (
     <NextThemesProvider {...props} forcedTheme="light">
-      <Navbar />
-      {children}
-      <Footer />
+      <TooltipProvider>
+        <Navbar />
+        {children}
+        <Footer />
+      </TooltipProvider>
     </NextThemesProvider>
   );
 }
