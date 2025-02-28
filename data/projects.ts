@@ -2,6 +2,8 @@ import { StaticImageData } from "next/image";
 import HerbikidsBabyCream from "@/public/herbikids/baby-cream.webp";
 import HerbikidsParfume from "@/public/herbikids/parfume.webp";
 import Herbiglow from "@/public/herbiglow/herbiglow-1.webp";
+import SkinSpace from "@/public/skinspace/skinspace-1.webp";
+import WhiteLabel from "@/public/whitelabel/white-label-beauty-products.webp";
 
 interface Project {
   id: number;
@@ -34,29 +36,27 @@ export const Projects: Project[] = [
   {
     id: 3,
     title: "Skinspace",
-    description: "A sunscreen that can protect your skin from the sun.",
-    image: [HerbikidsBabyCream],
-    category: ["sunscreen", "derma"],
+    description:
+      "SkinSpace adalah brand perawatan wajah yang fokus pada produk sunscreen berbahan alami, dirancang untuk melindungi kulit dari sinar UV tanpa menggunakan bahan kimia berbahaya. Produk ini cocok untuk semua jenis kulit, termasuk kulit sensitif, dan menekankan keamanan serta kenyamanan pengguna. SkinSpace hadir dengan konsep clean beauty yang ramah lingkungan dan ramah kulit, menjadikannya pilihan ideal bagi mereka yang mencari perawatan kulit yang efektif dan alami.",
+    image: [SkinSpace],
+    category: ["sunscreen", "natural", "no dangerous chemical"],
+    link: "https://www.instagram.com/skinspace.indo/?hl=en",
   },
   {
     id: 4,
     title: "Whitelabel",
-    description: "A lotion that can protect your skin from the sun.",
-    image: [HerbikidsBabyCream],
+    description:
+      "Saya memiliki keahlian dalam mengembangkan produk kosmetik whitelabel yang siap disesuaikan dengan kebutuhan dan identitas merek Anda. Dengan pengalaman di industri kecantikan, saya dapat membantu Anda menciptakan produk skincare, makeup, atau perawatan tubuh berkualitas tinggi yang diproduksi secara profesional, namun dengan branding yang sepenuhnya milik Anda. Mulai dari pemilihan formula, desain kemasan, hingga strategi pemasaran, saya siap mendukung Anda menciptakan produk yang unik dan siap bersaing di pasar.",
+    image: [WhiteLabel],
     category: ["lotion", "derma"],
   },
   {
     id: 5,
     title: "One SBC Glowing",
-    description: "A sunscreen that can protect your skin from the sun.",
+    description:
+      "One SBC Glowing adalah produk dari rangkaian GLOGLOWING SKIN CARE, khususnya Toner Essence Acne Booster. Produk ini diformulasikan untuk kulit berminyak dan berjerawat, dengan tujuan membantu membersihkan, menenangkan, dan menyegarkan kulit wajah. Essence ini mengandung bahan-bahan yang dapat membantu mengurangi jerawat, menyeimbangkan produksi minyak, serta memberikan efek glowing alami pada kulit.",
     image: [HerbikidsBabyCream],
-    category: ["sunscreen", "derma"],
-  },
-  {
-    id: 6,
-    title: "Lotion",
-    description: "A lotion that can protect your skin from the sun.",
-    image: [HerbikidsBabyCream],
-    category: ["lotion", "derma"],
+    category: ["toner"],
+    link: "https://shopee.co.id/GLOGLOWING-Glowing-Essence-Acne-60ml-i.154601267.2434639691?sp_atk=1a577ca9-210e-4640-8b80-d8be5e1751a3&xptdk=1a577ca9-210e-4640-8b80-d8be5e1751a3",
   },
 ];

@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Review from "@/components/review";
 // import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 
 // const content = [
@@ -169,7 +170,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="fler flex"></div>
+      <div className="fler">
+        <Review />
+      </div>
     </div>
   );
 }
