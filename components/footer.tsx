@@ -13,7 +13,11 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 export const Logo = () => {
   return (
     <div className="flex items-center justify-center">
-      <p className={cn(josefinSans.className, "text-4xl font-bold")}>Rahmita</p>
+      <p
+        className={cn(josefinSans.className, "text-2xl font-bold md:text-4xl")}
+      >
+        Rahmita
+      </p>
     </div>
   );
 };

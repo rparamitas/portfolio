@@ -18,7 +18,7 @@ const Navbar = () => {
 
   return (
     <div className="sticky top-0 z-10 flex items-center justify-center bg-white">
-      <nav className="container flex h-12 items-center justify-between">
+      <nav className="container flex h-12 items-center justify-between px-10 md:px-0">
         <Logo />
         <ul className="flex flex-row space-x-4 text-lg">
           {listPage.map((item) => (
@@ -26,7 +26,7 @@ const Navbar = () => {
               key={item.title}
               onClick={() => route.push(item.url)}
               className={cn(
-                "group flex transform cursor-pointer flex-row items-center justify-center text-xl transition-transform hover:translate-x-2",
+                "group flex transform cursor-pointer flex-row items-center justify-center text-lg transition-transform hover:translate-x-2 md:text-xl",
                 josefinSans.className,
                 listPage.find((page) => page.url === pathname)?.title ===
                   item.title && "underline",

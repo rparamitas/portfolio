@@ -66,29 +66,32 @@ export default function Home() {
   return (
     <div>
       <div className="flex items-center justify-center bg-bg">
-        <div className="container flex items-center justify-between gap-x-16">
-          <div className="flex h-full flex-1 flex-col justify-center gap-y-8">
-            <p className="text-xl">
+        <div className="container flex flex-col items-center justify-between gap-x-16 gap-y-8 px-8 md:px-0 lg:flex-row">
+          <div className="mt-12 flex h-full flex-1 flex-col justify-center gap-y-8 md:mt-0">
+            <p className="text-center text-xl md:text-left">
               Hi, my name is{" "}
               <span className="decoration-red hover:cursor-default hover:underline">
                 Rahmita Paramita Sudirman
               </span>
             </p>
-            <h1 className="text-wrap text-7xl font-bold">
+            <h1 className="text-pretty text-center text-4xl font-bold md:text-left md:text-7xl">
               I create solutions for beauty growth.
             </h1>
-            <p className="text-lg">
+            <p className="text-pretty text-center text-lg md:text-left">
               I&apos;m a Product Development Specialist based in Indonesia, with
               extensive experience in R&D for cosmetic products, and i
               successfully made customers reorder cosmetic products as much as
               10000+ pcs in each month.
             </p>
-            <Button className="w-fit" variant={"reverse"}>
+            <Button
+              className="w-fit self-center md:self-start"
+              variant={"reverse"}
+            >
               <Link href={"mailto:rparamitas@gmail.com"}>Get in touch</Link>
             </Button>
           </div>
           <div className="flex flex-1 items-center justify-center">
-            <div className="relative h-[700px] w-full">
+            <div className="relative h-[500px] w-[400px] md:h-[700px] md:w-full">
               <Image
                 src={PhotoProfile}
                 alt="My Photo"

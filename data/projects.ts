@@ -4,6 +4,7 @@ import HerbikidsParfume from "@/public/herbikids/parfume.webp";
 import Herbiglow from "@/public/herbiglow/herbiglow-1.webp";
 import SkinSpace from "@/public/skinspace/skinspace-1.webp";
 import WhiteLabel from "@/public/whitelabel/white-label-beauty-products.webp";
+import OneSBCGlowing from "@/public/one-sbc-glowing/one-sbc-glowing-1.webp";
 
 interface Project {
   id: number;
@@ -55,7 +56,7 @@ export const Projects: Project[] = [
     title: "One SBC Glowing",
     description:
       "One SBC Glowing adalah produk dari rangkaian GLOGLOWING SKIN CARE, khususnya Toner Essence Acne Booster. Produk ini diformulasikan untuk kulit berminyak dan berjerawat, dengan tujuan membantu membersihkan, menenangkan, dan menyegarkan kulit wajah. Essence ini mengandung bahan-bahan yang dapat membantu mengurangi jerawat, menyeimbangkan produksi minyak, serta memberikan efek glowing alami pada kulit.",
-    image: [HerbikidsBabyCream],
+    image: [OneSBCGlowing],
     category: ["toner"],
     link: "https://shopee.co.id/GLOGLOWING-Glowing-Essence-Acne-60ml-i.154601267.2434639691?sp_atk=1a577ca9-210e-4640-8b80-d8be5e1751a3&xptdk=1a577ca9-210e-4640-8b80-d8be5e1751a3",
   },
