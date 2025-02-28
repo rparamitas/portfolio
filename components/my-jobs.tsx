@@ -130,8 +130,8 @@ const Slide = ({
         "absolute left-0 top-0 h-full w-full transition-opacity duration-300 ease-in-out",
       )}
     >
-      <div className="flex h-full flex-row items-center justify-center gap-x-20 p-12">
-        <div className="relative flex h-full basis-5/12 justify-center">
+      <div className="flex h-full flex-col items-center justify-center gap-x-20 p-12 md:flex-row">
+        <div className="relative flex h-[500px] w-[300px] basis-5/12 justify-center md:h-full md:w-full">
           <Image
             src={image || defaultImage}
             alt={title}

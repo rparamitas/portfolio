@@ -56,11 +56,15 @@ const data: TestimonialProps[] = [
 const Testimonial = () => {
   return (
     <div className="">
-      <div className="flex flex-row gap-x-12">
+      <div className="flex flex-col gap-x-12 md:flex-row">
         {data.map((item) => (
           <Card
             key={item.id}
-            className={cn(item.id % 2 === 0 ? "rotate-6 bg-bw" : "-rotate-6")}
+            className={cn(
+              item.id % 2 === 0
+                ? "m-8 rotate-2 bg-bw md:m-0 md:rotate-6"
+                : "m-8 -rotate-2 md:m-0 md:-rotate-6",
+            )}
           >
             <CardContent className="">
               <div className="flex flex-col gap-y-8 pt-6">

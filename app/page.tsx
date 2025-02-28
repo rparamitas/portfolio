@@ -144,7 +144,9 @@ export default function Home() {
                     key={index}
                     className={cn(
                       "flex w-full flex-row items-center justify-center gap-x-8",
-                      index % 2 === 0 ? "flex-row-reverse" : "flex-row",
+                      index % 2 === 0
+                        ? "flex-col md:flex-row-reverse"
+                        : "flex-col md:flex-row",
                     )}
                   >
                     <div className="w-[400px] flex-1">
