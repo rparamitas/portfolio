@@ -3,12 +3,13 @@
 
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import defaultImage from "@/public/BlankPhotoProfile.webp";
-import MyPhoto from "@/public/my-photo.png";
-import { Button } from "./ui/button";
+import Innovative from "@/public/featured/innovative.jpg";
+import FormulationProcess from "@/public/featured/formulation-process.png";
+import ProductionCosmetics from "@/public/featured/production-cosmetics.webp";
+import SkincareProducts from "@/public/featured/skincare-products.webp";
 
 interface DataJobs {
   id: number;
@@ -27,7 +28,7 @@ const data: DataJobs[] = [
       "I specialize in developing effective and market-ready cosmetic products tailored to your brand's goals. Whether you're a startup or an established business, I can assist with concept ideation, ingredient research, and formulation experiments to create innovative products that resonate with your audience and drive growth.",
     action: "Learn More",
     link: "https://google.com",
-    image: MyPhoto,
+    image: Innovative,
   },
   {
     id: 2,
@@ -36,6 +37,7 @@ const data: DataJobs[] = [
       "From skincare and baby care to facial and personal care, I can formulate products that cater to diverse consumer needs. Leveraging my experience in R&D, I can work with you to refine formulations, select the right active ingredients and excipients, and ensure compliance with industry standards while maintaining product efficacy and appeal.",
     action: "Learn More",
     link: "https://google.com",
+    image: FormulationProcess,
   },
   {
     id: 3,
@@ -44,6 +46,7 @@ const data: DataJobs[] = [
       "I can help you transition from prototypes to large-scale production with ease. With my experience in managing product development pipelines and overseeing repeat orders of 50,000+ units, I ensure your products maintain consistent quality and meet customer expectations at scale.",
     action: "Learn More",
     link: "https://google.com",
+    image: ProductionCosmetics,
   },
   {
     id: 4,
@@ -51,6 +54,7 @@ const data: DataJobs[] = [
     description:
       "A product's success isn't just about what's inside—it’s also about how it looks and feels. I can assist in designing attractive and functional product packaging that aligns with your brand identity and captures the attention of your target market.",
     link: "#",
+    image: SkincareProducts,
   },
 ];
 
@@ -108,8 +112,8 @@ const Slide = ({
   title,
   description,
   image,
-  action,
-  link,
+  // action,
+  // link,
   isActive,
 }: {
   title: string;
@@ -145,11 +149,12 @@ const Slide = ({
             <p className="text-justify text-lg leading-relaxed tracking-wide">
               {description}
             </p>
-            <Button className="w-fit">
+            {/* // TODOS */}
+            {/* <Button className="w-fit">
               <Link href={link || "javascript:void(0)"} className="w-fit">
                 {action || "Learn More"}
               </Link>
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>

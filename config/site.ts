@@ -19,12 +19,13 @@ export const listPage: listPage[] = [
     title: "About",
     url: "/about",
   },
-  {
-    title: "Projects",
-    url: "/projects",
-  },
-  {
-    title: "Contact",
-    url: "/contact",
-  },
+  // TODOS
+  // {
+  //   title: "Projects",
+  //   url: "/projects",
+  // },
+  // {
+  //   title: "Contact",
+  //   url: "/contact",
+  // },
 ];

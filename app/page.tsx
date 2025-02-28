@@ -8,6 +8,8 @@ import { Projects } from "@/data/projects";
 import { cn } from "@/lib/utils";
 // import { Item } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 // import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 
 // const content = [
@@ -64,17 +66,20 @@ export default function Home() {
     <div>
       <div className="flex items-center justify-center bg-bg">
         <div className="container flex items-center justify-between gap-x-16">
-          <div className="flex h-full flex-1 flex-col justify-center">
-            <p>Hi, my name is Rahmita Paramita Sudirman</p>
+          <div className="flex h-full flex-1 flex-col justify-center gap-y-8">
+            <p className="text-xl">Hi, my name is Rahmita Paramita Sudirman</p>
             <h1 className="text-wrap text-7xl font-bold">
               I create solutions for beauty growth.
             </h1>
-            <p>
+            <p className="text-lg">
               I&apos;m a Product Development Specialist based in Indonesia, with
               extensive experience in R&D for cosmetic products, and i
               successfully made customers reorder cosmetic products as much as
               10000+ pcs in each month.
             </p>
+            <Button className="w-fit" variant={"reverse"}>
+              <Link href={"mailto:rparamitas@gmail.com"}>Get in touch</Link>
+            </Button>
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="relative h-[700px] w-full">
@@ -96,7 +101,7 @@ export default function Home() {
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-24">
             <h2 className="text-center text-3xl font-bold">
-              Don&apos;t just take our words. Over 1000+ people trust me.
+              Don&apos;t just take our words. Over 70+ people trust me.
             </h2>
             <div className="flex flex-row">
               <Testimonial />
@@ -118,7 +123,7 @@ export default function Home() {
       </div>
       <div className="flex items-center justify-center border bg-bw">
         <div className="container flex flex-col py-20">
-          <div className="flex flex-col gap-y-24">
+          <div className="flex flex-col gap-y-8">
             <h2 className="text-center text-3xl font-bold">
               Featured Projects
             </h2>
@@ -129,25 +134,32 @@ export default function Home() {
                   <div
                     key={index}
                     className={cn(
-                      "flex w-full flex-row items-center justify-center gap-x-8 border border-black",
+                      "flex w-full flex-row items-center justify-center gap-x-8",
                       index % 2 === 0 ? "flex-row-reverse" : "flex-row",
                     )}
                   >
-                    <div className="border border-blue">
-                      <Image src={project.image} alt={project.title} />
-                    </div>
-                    <div className="flex flex-col">
-                      <p className="flex flex-row gap-x-2">
-                        {project.category?.map((item) => (
-                          <span key={item} className="rounded-full border">
-                            <span>{item}</span>
-                          </span>
+                    <div className="w-[400px] flex-1">
+                      {project.image &&
+                        (Array.isArray(project.image) ? (
+                          <Image src={project.image[0]} alt={project.title} />
+                        ) : (
+                          <Image src={project.image} alt={project.title} />
                         ))}
-                      </p>
-                      <p>{project.title}</p>
+                    </div>
+                    <div className="flex flex-1 flex-col gap-y-2">
+                      <p className="text-3xl font-bold">{project.title}</p>
+                      <div className="flex flex-row gap-x-2">
+                        {project.category?.map((item) => (
+                          <Badge key={item} variant={"default"}>
+                            {item}
+                          </Badge>
+                        ))}
+                      </div>
                       <p>{project.description}</p>
                       {project.link && (
-                        <Link href={project.link}>{project.title}</Link>
+                        <Button className="w-fit" variant={"neutral"}>
+                          <Link href={project.link}>Go to view</Link>
+                        </Button>
                       )}
                     </div>
                   </div>
@@ -157,6 +169,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <div className="fler flex"></div>
     </div>
   );
 }

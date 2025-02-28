@@ -24,6 +24,12 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      screens: {
+        xl: "1280px",
+      },
+    },
     extend: {
       colors: {
         main: "var(--main)",
