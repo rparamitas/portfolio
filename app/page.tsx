@@ -68,7 +68,12 @@ export default function Home() {
       <div className="flex items-center justify-center bg-bg">
         <div className="container flex items-center justify-between gap-x-16">
           <div className="flex h-full flex-1 flex-col justify-center gap-y-8">
-            <p className="text-xl">Hi, my name is Rahmita Paramita Sudirman</p>
+            <p className="text-xl">
+              Hi, my name is{" "}
+              <span className="decoration-red hover:cursor-default hover:underline">
+                Rahmita Paramita Sudirman
+              </span>
+            </p>
             <h1 className="text-wrap text-7xl font-bold">
               I create solutions for beauty growth.
             </h1>
