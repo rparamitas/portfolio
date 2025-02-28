@@ -87,7 +87,7 @@ export default function Home() {
               className="w-fit self-center md:self-start"
               variant={"reverse"}
             >
-              <Link href={"mailto:rparamitas@gmail.com"}>Get in touch</Link>
+              <Link href={"mailto:email@rahmita.my.id"}>Get in touch</Link>
             </Button>
           </div>
           <div className="flex flex-1 items-center justify-center">
@@ -109,7 +109,7 @@ export default function Home() {
       <div className="flex items-center justify-center bg-bw">
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-24">
-            <h2 className="text-center text-3xl font-bold">
+            <h2 className="text-center text-4xl font-bold">
               Don&apos;t just take our words. Over 70+ people trust me.
             </h2>
             <div className="flex flex-row">
@@ -130,10 +130,10 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center border bg-bw">
+      <div className="flex items-center justify-center bg-bw">
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-8">
-            <h2 className="text-center text-3xl font-bold">
+            <h2 className="text-center text-4xl font-bold">
               Featured Projects
             </h2>
             <div className="relative">
@@ -143,7 +143,7 @@ export default function Home() {
                   <div
                     key={index}
                     className={cn(
-                      "flex w-full flex-row items-center justify-center gap-x-8",
+                      "my-6 flex w-full flex-row items-center justify-center gap-x-8 gap-y-6 md:my-0 md:gap-y-0",
                       index % 2 === 0
                         ? "flex-col md:flex-row-reverse"
                         : "flex-col md:flex-row",
@@ -157,18 +157,21 @@ export default function Home() {
                           <Image src={project.image} alt={project.title} />
                         ))}
                     </div>
-                    <div className="flex flex-1 flex-col gap-y-2">
+                    <div className="flex flex-1 flex-col gap-y-4 text-center md:text-start">
                       <p className="text-3xl font-bold">{project.title}</p>
-                      <div className="flex flex-row gap-x-2">
+                      <div className="flex flex-row justify-center gap-x-2 md:justify-start">
                         {project.category?.map((item) => (
                           <Badge key={item} variant={"default"}>
                             {item}
                           </Badge>
                         ))}
                       </div>
-                      <p>{project.description}</p>
+                      <p className="text-pretty">{project.description}</p>
                       {project.link && (
-                        <Button className="w-fit" variant={"neutral"}>
+                        <Button
+                          className="w-fit self-center md:self-start"
+                          variant={"neutral"}
+                        >
                           <Link href={project.link}>Go to view</Link>
                         </Button>
                       )}
@@ -180,7 +183,8 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="fler">
+      <div className="flex flex-col gap-y-8">
+        <h3 className="text-center text-3xl font-bold">What they said</h3>
         <Review />
       </div>
     </div>
