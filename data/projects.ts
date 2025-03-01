@@ -22,7 +22,7 @@ export const Projects: Project[] = [
     title: "Decorative",
     image: [Decorative],
     description:
-      "Selama kurang lebih 1 tahun 6 bulan, saya memiliki pengalaman mendalam dalam pembuatan decorative cosmetics, khususnya pada produk seperti ushion, lip tint, lip cream, dan lip serum. Saya telah menguasai seluruh proses produksi, mulai dari formulasi, pencampuran bahan, hingga pengemasan produk akhir. Keahlian saya mencakup pemahaman mendalam tentang bahan-bahan kosmetik, kontrol kualitas, serta penyesuaian produk sesuai dengan tren pasar. Pengalaman ini telah membuat saya mahir dalam menciptakan produk kosmetik dekoratif yang inovatif, aman, dan berkualitas tinggi.",
+      "Saya memiliki pengalaman mendalam dalam pembuatan decorative cosmetics, khususnya pada produk seperti ushion, lip tint, lip cream, dan lip serum. Saya telah menguasai seluruh proses produksi, mulai dari formulasi, pencampuran bahan, hingga pengemasan produk akhir. Keahlian saya mencakup pemahaman mendalam tentang bahan-bahan kosmetik, kontrol kualitas, serta penyesuaian produk sesuai dengan tren pasar. Pengalaman ini telah membuat saya mahir dalam menciptakan produk kosmetik dekoratif yang inovatif, aman, dan berkualitas tinggi.",
     category: ["lip tint", "lip cream", "lip serum", "cushion"],
   },
   {

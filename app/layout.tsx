@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { redHatText } from "./font";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/theme-provider";
 import { siteConfig } from "@/config/site";
 
@@ -23,7 +25,7 @@ export const metadata: Metadata = {
         alt: siteConfig.name,
       },
     ],
-    authors: [siteConfig.author, "Muchammad Fahmi Arif"],
+    type: "website",
   },
 };
 
@@ -42,6 +44,8 @@ export default function RootLayout({
         <ThemeProvider attribute={"class"} defaultTheme="light">
           {children}
         </ThemeProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

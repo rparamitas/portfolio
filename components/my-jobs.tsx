@@ -10,6 +10,7 @@ import Innovative from "@/public/featured/innovative.jpg";
 import FormulationProcess from "@/public/featured/formulation-process.png";
 import ProductionCosmetics from "@/public/featured/production-cosmetics.webp";
 import SkincareProducts from "@/public/featured/skincare-products.webp";
+import AnalyticalDevelopment from "@/public/featured/analytical-development.jpeg";
 
 interface DataJobs {
   id: number;
@@ -50,11 +51,11 @@ const data: DataJobs[] = [
   },
   {
     id: 4,
-    title: "Brand-Aligned Product Design and Packaging",
+    title: "Analytical Development for Product Quality",
     description:
-      "A product's success isn't just about what's inside—it’s also about how it looks and feels. I can assist in designing attractive and functional product packaging that aligns with your brand identity and captures the attention of your target market.",
+      "With expertise in analytical development, I ensure the highest quality and consistency in cosmetic formulations. I have hands-on experience using HPLC (High-Performance Liquid Chromatography) to analyze active ingredients, stability, and overall product integrity. This ensures that each batch meets industry standards and performs as expected, enhancing product reliability and customer trust.",
     link: "#",
-    image: SkincareProducts,
+    image: AnalyticalDevelopment,
   },
 ];
 

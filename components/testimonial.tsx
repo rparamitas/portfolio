@@ -27,7 +27,7 @@ const data: TestimonialProps[] = [
   {
     id: 1,
     name: "Harvey",
-    position: "Supervisor at Pillars",
+    position: "Manager at Pillars",
     logo: PillarsLogo,
     photo: HarveyPhoto,
     testimonial:

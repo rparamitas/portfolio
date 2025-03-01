@@ -83,12 +83,22 @@ export default function Home() {
               successfully made customers reorder cosmetic products as much as
               10000+ pcs in each month.
             </p>
-            <Button
-              className="w-fit self-center md:self-start"
-              variant={"reverse"}
-            >
-              <Link href={"mailto:email@rahmita.my.id"}>Get in touch</Link>
-            </Button>
+            <div className="flex flex-row gap-x-4">
+              <Button
+                className="w-fit self-center md:self-start"
+                variant={"default"}
+              >
+                <Link href={"mailto:email@rahmita.my.id"}>Get in touch</Link>
+              </Button>
+              <Button variant={"neutral"} className="">
+                <Link
+                  href={"/cv-rahmita.pdf"}
+                  download={"cv-rahmita-paramita-sudirman.pdf"}
+                >
+                  Download CV
+                </Link>
+              </Button>
+            </div>
           </div>
           <div className="flex flex-1 items-center justify-center">
             <div className="relative h-[500px] w-[400px] md:h-[700px] md:w-full">
