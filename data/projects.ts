@@ -22,7 +22,7 @@ export const Projects: Project[] = [
     title: "Decorative",
     image: [Decorative],
     description:
-      "Saya memiliki pengalaman mendalam dalam pembuatan decorative cosmetics, khususnya pada produk seperti ushion, lip tint, lip cream, dan lip serum. Saya telah menguasai seluruh proses produksi, mulai dari formulasi, pencampuran bahan, hingga pengemasan produk akhir. Keahlian saya mencakup pemahaman mendalam tentang bahan-bahan kosmetik, kontrol kualitas, serta penyesuaian produk sesuai dengan tren pasar. Pengalaman ini telah membuat saya mahir dalam menciptakan produk kosmetik dekoratif yang inovatif, aman, dan berkualitas tinggi.",
+      "I have in-depth experience in decorative cosmetics manufacturing, especially in products such as cushion, lip tint, lip cream, and lip serum. I have mastered the entire production process, from formulation, mixing of ingredients, to packaging of the final product. My expertise includes an in-depth understanding of cosmetic ingredients, quality control, as well as product customization according to market trends. This experience has made me proficient in creating innovative, safe and high-quality decorative cosmetic products.",
     category: ["lip tint", "lip cream", "lip serum", "cushion"],
   },
   {
@@ -30,7 +30,7 @@ export const Projects: Project[] = [
     title: "Herbikids",
     image: [HerbikidsBabyCream, HerbikidsParfume],
     description:
-      "Herbikids adalah brand perawatan bayi yang fokus pada produk alami dan aman untuk kulit sensitif bayi. Saat ini, Herbikids menawarkan dua produk utama: parfum bayi dan baby cream. Kedua produk ini dirancang dengan bahan-bahan alami yang lembut, bebas dari bahan kimia berbahaya, sehingga cocok untuk menjaga kelembutan dan kesehatan kulit bayi.",
+      "Herbikids is a baby care brand that focuses on natural and safe products for babies' sensitive skin. Currently, Herbikids offers two main products: baby perfume and baby cream. Both products are designed with gentle natural ingredients, free from harmful chemicals, making them suitable for keeping baby's skin soft and healthy.",
     link: "https://shopee.co.id/herbikids",
     category: ["parfume", "baby cream", "baby lotion"],
   },
@@ -38,7 +38,7 @@ export const Projects: Project[] = [
     id: 3,
     title: "Herbiglow",
     description:
-      "Herbiglow adalah brand produk perawatan kulit yang menawarkan rangkaian produk seperti body lotion, sunscreen, cleansing, face wash, dan lainnya. Brand ini fokus pada perawatan kulit yang sehat dan glowing, dengan formulasi yang dirancang untuk menjaga kelembapan, melindungi dari sinar UV, serta membersihkan kulit secara menyeluruh. Herbiglow cocok untuk semua jenis kulit dan menekankan penggunaan bahan-bahan yang aman serta efektif. Produk-produknya dapat menjadi pilihan tepat untuk merawat kulit sehari-hari, baik untuk wajah maupun tubuh.",
+      "Herbiglow is a skincare brand that offers a range of products such as body lotion, sunscreen, cleansing, face wash, and more. The brand focuses on healthy and glowing skincare, with formulations designed to retain moisture, protect against UV rays, and thoroughly cleanse the skin. Herbiglow is suitable for all skin types and emphasizes the use of safe and effective ingredients. Its products are a great choice for everyday skincare, both for the face and body.",
     image: [Herbiglow],
     category: ["sunscreen", "night cream", "face wash"],
     link: "https://shopee.co.id/herbiglow.id",
@@ -47,7 +47,7 @@ export const Projects: Project[] = [
     id: 4,
     title: "Skinspace",
     description:
-      "SkinSpace adalah brand perawatan wajah yang fokus pada produk sunscreen berbahan alami, dirancang untuk melindungi kulit dari sinar UV tanpa menggunakan bahan kimia berbahaya. Produk ini cocok untuk semua jenis kulit, termasuk kulit sensitif, dan menekankan keamanan serta kenyamanan pengguna. SkinSpace hadir dengan konsep clean beauty yang ramah lingkungan dan ramah kulit, menjadikannya pilihan ideal bagi mereka yang mencari perawatan kulit yang efektif dan alami.",
+      "SkinSpace is a facial care brand that focuses on natural sunscreen products, designed to protect skin from UV rays without the use of harmful chemicals. The products are suitable for all skin types, including sensitive skin, and emphasize safety and user comfort. SkinSpace comes with a clean beauty concept that is eco-friendly and skin-friendly, making it an ideal choice for those looking for effective and natural skincare.",
     image: [SkinSpace],
     category: ["sunscreen", "natural", "no dangerous chemical"],
     link: "https://www.instagram.com/skinspace.indo/?hl=en",
@@ -56,7 +56,7 @@ export const Projects: Project[] = [
     id: 5,
     title: "Whitelabel",
     description:
-      "Saya memiliki keahlian dalam mengembangkan produk kosmetik whitelabel yang siap disesuaikan dengan kebutuhan dan identitas merek Anda. Dengan pengalaman di industri kecantikan, saya dapat membantu Anda menciptakan produk skincare, Bodycare, Haircare, Babycare, Deocare, Parfume atau perawatan tubuh berkualitas tinggi yang diproduksi secara profesional, namun dengan branding yang sepenuhnya milik Anda. Mulai dari pemilihan formula, desain kemasan, hingga strategi pemasaran, saya siap mendukung Anda menciptakan produk yang unik dan siap bersaing di pasar.",
+      "I have expertise in developing whitelabel cosmetic products that are readily customized to suit your needs and brand identity. With experience in the beauty industry, I can help you create high quality skincare, bodycare, haircare, babycare, deocare, perfume or body care products that are professionally produced, but with branding that is entirely yours. From formula selection, packaging design, to marketing strategy, I am ready to support you in creating unique products that are ready to compete in the market.",
     image: [WhiteLabel],
     category: ["skincare", "decorative"],
   },
@@ -64,7 +64,7 @@ export const Projects: Project[] = [
     id: 6,
     title: "One SBC Glowing",
     description:
-      "One SBC Glowing adalah produk dari rangkaian GLOGLOWING SKIN CARE, khususnya Toner Essence Acne Booster. Produk ini diformulasikan untuk kulit berminyak dan berjerawat, dengan tujuan membantu membersihkan, menenangkan, dan menyegarkan kulit wajah. Essence ini mengandung bahan-bahan yang dapat membantu mengurangi jerawat, menyeimbangkan produksi minyak, serta memberikan efek glowing alami pada kulit.",
+      "One SBC Glowing is a product from the GLOGLOWING SKIN CARE range, specifically the Toner Essence Acne Booster. This product is formulated for oily and acne-prone skin, with the aim of helping to cleanse, calm and refresh the skin. This essence contains ingredients that can help reduce acne, balance oil production, and give the skin a natural glowing effect.",
     image: [OneSBCGlowing],
     category: ["toner", "night cream"],
     link: "https://shopee.co.id/GLOGLOWING-Glowing-Essence-Acne-60ml-i.154601267.2434639691?sp_atk=1a577ca9-210e-4640-8b80-d8be5e1751a3&xptdk=1a577ca9-210e-4640-8b80-d8be5e1751a3",

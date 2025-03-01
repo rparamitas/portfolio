@@ -6,11 +6,11 @@ import { redHatText } from "../font";
 
 const AboutPage = () => {
   return (
-    <div className="container flex flex-row items-center justify-center gap-x-12">
+    <div className="container flex flex-col items-center justify-center gap-x-12 md:flex-row">
       <div className="flex-1">
         <Image src={MySelf} alt="Rahmita Paramita Sudirman" />
       </div>
-      <div className="flex flex-1 flex-col gap-y-8">
+      <div className="mt-4 flex flex-1 flex-col gap-y-8 px-4 md:mt-0">
         <h2 className={cn("text-5xl font-bold", redHatText.className)}>
           About me
         </h2>
