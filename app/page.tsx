@@ -166,7 +166,9 @@ export default function Home() {
                           </Badge>
                         ))}
                       </div>
-                      <p className="text-pretty">{project.description}</p>
+                      <p className="mx-8 text-pretty md:mx-0">
+                        {project.description}
+                      </p>
                       {project.link && (
                         <Button
                           className="w-fit self-center md:self-start"
