@@ -5,9 +5,13 @@ interface listPage {
 
 export const siteConfig = {
   name: "Rahmita Paramita Sudirman",
-  url: "https://localhost:3000",
+  url: "https://rahmita.my.id",
   description: "Personal website",
   author: "Rahmita Paramita Sudirman",
+  links: {
+    instagram: "https://www.instagram.com/rahmitaaps/",
+    linkedin: "https://www.linkedin.com/in/rahmita-paramita-763822154/",
+  },
 };
 
 export const listPage: listPage[] = [

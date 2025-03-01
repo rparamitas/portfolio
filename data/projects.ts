@@ -56,9 +56,9 @@ export const Projects: Project[] = [
     id: 5,
     title: "Whitelabel",
     description:
-      "Saya memiliki keahlian dalam mengembangkan produk kosmetik whitelabel yang siap disesuaikan dengan kebutuhan dan identitas merek Anda. Dengan pengalaman di industri kecantikan, saya dapat membantu Anda menciptakan produk skincare, makeup, atau perawatan tubuh berkualitas tinggi yang diproduksi secara profesional, namun dengan branding yang sepenuhnya milik Anda. Mulai dari pemilihan formula, desain kemasan, hingga strategi pemasaran, saya siap mendukung Anda menciptakan produk yang unik dan siap bersaing di pasar.",
+      "Saya memiliki keahlian dalam mengembangkan produk kosmetik whitelabel yang siap disesuaikan dengan kebutuhan dan identitas merek Anda. Dengan pengalaman di industri kecantikan, saya dapat membantu Anda menciptakan produk skincare, Bodycare, Haircare, Babycare, Deocare, Parfume atau perawatan tubuh berkualitas tinggi yang diproduksi secara profesional, namun dengan branding yang sepenuhnya milik Anda. Mulai dari pemilihan formula, desain kemasan, hingga strategi pemasaran, saya siap mendukung Anda menciptakan produk yang unik dan siap bersaing di pasar.",
     image: [WhiteLabel],
-    category: ["lotion", "derma"],
+    category: ["skincare", "decorative"],
   },
   {
     id: 6,
@@ -66,7 +66,7 @@ export const Projects: Project[] = [
     description:
       "One SBC Glowing adalah produk dari rangkaian GLOGLOWING SKIN CARE, khususnya Toner Essence Acne Booster. Produk ini diformulasikan untuk kulit berminyak dan berjerawat, dengan tujuan membantu membersihkan, menenangkan, dan menyegarkan kulit wajah. Essence ini mengandung bahan-bahan yang dapat membantu mengurangi jerawat, menyeimbangkan produksi minyak, serta memberikan efek glowing alami pada kulit.",
     image: [OneSBCGlowing],
-    category: ["toner"],
+    category: ["toner", "night cream"],
     link: "https://shopee.co.id/GLOGLOWING-Glowing-Essence-Acne-60ml-i.154601267.2434639691?sp_atk=1a577ca9-210e-4640-8b80-d8be5e1751a3&xptdk=1a577ca9-210e-4640-8b80-d8be5e1751a3",
   },
 ];
