@@ -10,6 +10,21 @@ export const metadata: Metadata = {
   metadataBase: process.env.NEXT_PUBLIC_APP_URL
     ? new URL(process.env.NEXT_PUBLIC_APP_URL)
     : new URL(siteConfig.url),
+  openGraph: {
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: [
+      {
+        url: new URL("opengraph-image.png", siteConfig.url).toString(),
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+    authors: [siteConfig.author, "Muchammad Fahmi Arif"],
+  },
 };
 
 export const viewport: Viewport = {
