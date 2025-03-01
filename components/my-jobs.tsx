@@ -9,7 +9,6 @@ import defaultImage from "@/public/BlankPhotoProfile.webp";
 import Innovative from "@/public/featured/innovative.jpg";
 import FormulationProcess from "@/public/featured/formulation-process.png";
 import ProductionCosmetics from "@/public/featured/production-cosmetics.webp";
-import SkincareProducts from "@/public/featured/skincare-products.webp";
 import AnalyticalDevelopment from "@/public/featured/analytical-development.jpeg";
 
 interface DataJobs {
