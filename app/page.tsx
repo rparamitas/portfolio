@@ -11,6 +11,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Review from "@/components/review";
+import { AchievementChart } from "@/components/achievement-chart";
 // import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
 
 // const content = [
@@ -141,6 +142,12 @@ export default function Home() {
         </div>
       </div>
       <div className="flex items-center justify-center bg-bw">
+        <div className="container flex flex-col py-20">
+          <h2 className="text-center text-4xl font-bold">Achievement</h2>
+          <AchievementChart />
+        </div>
+      </div>
+      <div className="flex items-center justify-center bg-bg">
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-8">
             <h2 className="text-center text-4xl font-bold">
