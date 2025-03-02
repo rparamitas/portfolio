@@ -11,9 +11,24 @@ import {
 } from "@/components/ui/chart";
 
 const chartData = [
-  { category: "accepted", value: 38, fill: "var(--color-accepted)" },
-  { category: "decline", value: 8, fill: "var(--color-decline)" },
-  { category: "development", value: 454, fill: "var(--color-development)" },
+  {
+    category: "accepted",
+    value: 38,
+    fill: "var(--color-accepted)",
+    color: "hsl(var(--chart-1))",
+  },
+  {
+    category: "decline",
+    value: 8,
+    fill: "var(--color-decline)",
+    color: "hsl(var(--chart-2))",
+  },
+  {
+    category: "development",
+    value: 454,
+    fill: "var(--color-development)",
+    color: "hsl(var(--chart -3))",
+  },
 ];
 
 const chartConfig = {
@@ -33,14 +48,6 @@ const chartConfig = {
     color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig;
-
-const mappedData = (Object.keys(chartConfig) as Array<keyof typeof chartConfig>)
-  .filter((key) => key !== "value") // Exclude the "value" key
-  .map((key) => ({
-    key,
-    label: chartConfig[key].label,
-    color: chartConfig[key].color || "default-color", // Fallback if color is not defined
-  }));
 
 export function AchievementChart() {
   const totalVisitors = React.useMemo(() => {
@@ -101,13 +108,16 @@ export function AchievementChart() {
           </ChartContainer>
         </div>
         <div className="flex flex-row justify-center gap-x-4">
-          {mappedData.map((item, index) => (
-            <div key={index} className="flex flex-row items-center gap-x-2">
+          {chartData.map((item, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center gap-x-2 md:flex-row"
+            >
               <div
                 className="h-4 w-4 rounded-full"
                 style={{ backgroundColor: item.color }}
               />
-              <span>{item.label}</span>
+              <span>{`${item.category.charAt(0).toUpperCase()}${item.category.slice(1)}: ${item.value}`}</span>
             </div>
           ))}
         </div>
