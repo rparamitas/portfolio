@@ -1,6 +1,65 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-main: var(--main);
+  --color-overlay: var(--overlay);
+  --color-blue: var(--blue);
+  --color-yellow: var(--yellow);
+  --color-red: var(--red);
+  --color-green: var(--green);
+  --color-puple: var(--puple);
+  --color-bg: var(--bg);
+  --color-bw: var(--bw);
+  --color-blank: var(--blank);
+  --color-text: var(--text);
+  --color-mtext: var(--mtext);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --color-ring-offset: var(--ring-offset);
+  --color-secondary-black: #212121;
+
+  --radius-base: 5px;
+
+  --shadow-shadow: var(--shadow);
+
+  --translate-box-shadow-x: 4px;
+  --translate-box-shadow-y: 4px;
+  --translate-reverse-box-shadow-x: -4px;
+  --translate-reverse-box-shadow-y: -4px;
+
+  --font-weight-base: 500;
+  --font-weight-heading: 700;
+}
+
+@utility container {
+  margin-inline: auto;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1280px) {
+    max-width: 1280px;
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 :root {
   --main: #fd9745;

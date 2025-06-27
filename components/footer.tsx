@@ -118,7 +118,7 @@ const Footer = () => {
             <Tooltip>
               <TooltipTrigger>
                 <Instagram
-                  className="size-8 rounded p-1 hover:cursor-pointer hover:bg-gray-50"
+                  className="size-8 rounded-sm p-1 hover:cursor-pointer hover:bg-gray-50"
                   onClick={() =>
                     window.open(
                       "https://www.instagram.com/rahmitaaps",
@@ -132,7 +132,7 @@ const Footer = () => {
             <Tooltip>
               <TooltipTrigger>
                 <LinkedIn
-                  className="size-8 rounded p-1 hover:cursor-pointer hover:bg-gray-50"
+                  className="size-8 rounded-sm p-1 hover:cursor-pointer hover:bg-gray-50"
                   onClick={() =>
                     window.open(
                       "https://www.linkedin.com/in/rahmita-paramita-763822154/",
