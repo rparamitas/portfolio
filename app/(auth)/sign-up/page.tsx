@@ -1,7 +1,7 @@
 import React from "react";
 import SignUpForm from "./components/form";
 
-const SignUpPage = () => {
+const SignUpPage = async () => {
   return (
     <div>
       <SignUpForm />
