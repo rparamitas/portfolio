@@ -1,12 +1,14 @@
 import VerifyEmail from "./emails/verifyEmail";
 import MagicLinkEmail from "./emails/magicLink";
 import VerifyOTP from "./emails/verifyOTP";
-import { render } from "@react-email/components";
-import React from "react";
 import ResetPasswordEmail from "./emails/resetPassword";
+import { render } from "@react-email/components";
 import { components } from "./_generated/api";
 import { Resend } from "@convex-dev/resend";
 import { type ActionCtx } from "./_generated/server";
+
+// TODO: replace with your verified Resend sender, e.g. "Portfolio <no-reply@yourdomain.com>"
+const EMAIL_FROM = "Rahmita <no-reply@rahmita.my.id>";
 
 export const resend = new Resend(components.resend, {
   testMode: false,
@@ -23,7 +25,7 @@ export const sendEmailVerification = async (
   },
 ) => {
   await resend.sendEmail(ctx, {
-    from: "Test <onboarding@boboddy.business>",
+    from: EMAIL_FROM,
     to,
     subject: "Verify your email address",
     html: await render(<VerifyEmail url={url} />),
@@ -41,7 +43,7 @@ export const sendOTPVerification = async (
   },
 ) => {
   await resend.sendEmail(ctx, {
-    from: "Test <onboarding@boboddy.business>",
+    from: EMAIL_FROM,
     to,
     subject: "Verify your email address",
     html: await render(<VerifyOTP code={code} />),
@@ -59,7 +61,7 @@ export const sendMagicLink = async (
   },
 ) => {
   await resend.sendEmail(ctx, {
-    from: "Test <onboarding@boboddy.business>",
+    from: EMAIL_FROM,
     to,
     subject: "Sign in to your account",
     html: await render(<MagicLinkEmail url={url} />),
@@ -77,7 +79,7 @@ export const sendResetPassword = async (
   },
 ) => {
   await resend.sendEmail(ctx, {
-    from: "Test <onboarding@boboddy.business>",
+    from: EMAIL_FROM,
     to,
     subject: "Reset your password",
     html: await render(<ResetPasswordEmail url={url} />),

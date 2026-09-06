@@ -46,6 +46,7 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
       },
     },
     emailVerification: {
+      autoSignInAfterVerification: true,
       sendVerificationEmail: async ({ user, url }) => {
         await sendEmailVerification(requireActionCtx(ctx), {
           to: user.email,
@@ -71,8 +72,6 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
       google: {
         clientId: process.env.GOOGLE_CLIENT_ID as string,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        accessType: "offline",
-        prompt: "select_account consent",
       },
     },
     user: {

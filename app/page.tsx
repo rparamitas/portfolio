@@ -39,7 +39,7 @@ export default function Home() {
               >
                 <Link href={"mailto:email@rahmita.my.id"}>Get in touch</Link>
               </Button>
-              <Button variant={"neutral"} className="">
+              <Button variant="secondary" className="">
                 <Link
                   href={"/cv-rahmita.pdf"}
                   download={"cv-rahmita-paramita-sudirman.pdf"}
@@ -130,7 +130,7 @@ export default function Home() {
                       {project.link && (
                         <Button
                           className="w-fit self-center md:self-start"
-                          variant={"neutral"}
+                          variant="secondary"
                         >
                           <Link href={project.link}>Go to view</Link>
                         </Button>

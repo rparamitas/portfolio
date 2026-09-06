@@ -1,12 +1,44 @@
 "use client";
 
+import { useState } from "react";
 import { listPage } from "@/config/site";
 import { usePathname, useRouter } from "next/navigation";
 import { Logo } from "./footer";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { josefinSans } from "@/app/font";
 import { ThemeToggle } from "./theme-toggle";
+import { authClient } from "@/lib/auth-client";
+
+const LogoutButton = ({ className }: { className?: string }) => {
+  const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
+  const { data: session } = authClient.useSession();
+
+  if (!session) {
+    return null;
+  }
+
+  const handleSignOut = async () => {
+    setIsPending(true);
+    await authClient.signOut();
+    router.push("/sign-in");
+  };
+
+  return (
+    <button
+      onClick={handleSignOut}
+      disabled={isPending}
+      className={cn(
+        "rounded-md p-2 transition-opacity duration-200 hover:cursor-pointer hover:opacity-80 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
+        className,
+      )}
+      aria-label="Log out"
+    >
+      <LogOut className="size-5" />
+    </button>
+  );
+};
 
 const Navbar = () => {
   const route = useRouter();
@@ -41,6 +73,7 @@ const Navbar = () => {
             ))}
           </ul>
           <ThemeToggle className="dark:text-white" />
+          <LogoutButton className="dark:text-white" />
         </div>
       </nav>
     </div>
