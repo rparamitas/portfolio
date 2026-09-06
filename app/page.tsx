@@ -6,78 +6,27 @@ import Testimonial from "@/components/testimonial";
 import MyJobs from "@/components/my-jobs";
 import { Projects } from "@/data/projects";
 import { cn } from "@/lib/utils";
-// import { Item } from "@radix-ui/react-dropdown-menu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Review from "@/components/review";
-// import { StickyScroll } from "@/components/ui/sticky-scroll-reveal";
-
-// const content = [
-//   {
-//     title: "Collaborative Editing",
-//     description:
-//       "Work together in real time with your team, clients, and stakeholders. Collaborate on documents, share ideas, and make decisions quickly. With our platform, you can streamline your workflow and increase productivity.",
-//     content: (
-//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
-//         Collaborative Editing
-//       </div>
-//     ),
-//   },
-//   {
-//     title: "Real time changes",
-//     description:
-//       "See changes as they happen. With our platform, you can track every modification in real time. No more confusion about the latest version of your project. Say goodbye to the chaos of version control and embrace the simplicity of real-time updates.",
-//     content: (
-//       <div className="flex h-full w-full items-center justify-center text-white">
-//         <Image
-//           src={PhotoProfile}
-//           width={300}
-//           height={300}
-//           className="h-full w-full object-cover"
-//           alt="linear board demo"
-//         />
-//       </div>
-//     ),
-//   },
-//   {
-//     title: "Version control",
-//     description:
-//       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
-//     content: (
-//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--orange-500),var(--yellow-500))] text-white">
-//         Version control
-//       </div>
-//     ),
-//   },
-//   {
-//     title: "Running out of content",
-//     description:
-//       "Experience real-time updates and never stress about version control again. Our platform ensures that you're always working on the most recent version of your project, eliminating the need for constant manual updates. Stay in the loop, keep your team aligned, and maintain the flow of your work without any interruptions.",
-//     content: (
-//       <div className="flex h-full w-full items-center justify-center bg-[linear-gradient(to_bottom_right,var(--cyan-500),var(--emerald-500))] text-white">
-//         Running out of content
-//       </div>
-//     ),
-//   },
-// ];
 
 export default function Home() {
   return (
     <div>
-      <div className="flex items-center justify-center bg-bg">
-        <div className="container flex flex-col items-center justify-between gap-x-16 gap-y-8 px-8 md:px-0 lg:flex-row">
+      <div className="bg-bg flex items-center justify-center">
+        <div className="container flex flex-col items-center justify-between gap-x-16 gap-y-8 px-8 lg:flex-row xl:px-0">
           <div className="mt-12 flex h-full flex-1 flex-col justify-center gap-y-8 md:mt-0">
-            <p className="text-center text-xl md:text-left">
+            <p className="mt-4 text-center text-xl md:text-left">
               Hi, my name is{" "}
               <span className="decoration-red hover:cursor-default hover:underline">
                 Rahmita Paramita Sudirman
               </span>
             </p>
-            <h1 className="text-pretty text-center text-4xl font-bold md:text-left md:text-7xl">
+            <h1 className="text-center text-4xl font-bold text-pretty md:text-left md:text-6xl">
               I create solutions for beauty growth.
             </h1>
-            <p className="text-pretty text-center text-lg md:text-left">
+            <p className="text-center text-lg text-pretty md:text-left">
               I&apos;m a Product Development Specialist based in Indonesia, with
               extensive experience in R&D for cosmetic products, and i
               successfully made customers reorder cosmetic products as much as
@@ -101,7 +50,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-1 items-center justify-center">
-            <div className="relative h-[500px] w-[400px] md:h-[700px] md:w-full">
+            <div className="relative h-[500px] w-[400px] md:h-[700px] md:w-[600px]">
               <Image
                 src={PhotoProfile}
                 alt="My Photo"
@@ -116,7 +65,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-bw">
+      <div className="bg-bw flex items-center justify-center">
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-24">
             <h2 className="text-center text-4xl font-bold">
@@ -128,7 +77,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-bg">
+      <div className="bg-bg flex items-center justify-center">
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-24">
             <h2 className="text-center text-4xl font-bold">
@@ -140,14 +89,13 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center bg-bw">
+      <div className="bg-bw flex items-center justify-center">
         <div className="container flex flex-col py-20">
-          <div className="flex flex-col gap-y-8">
+          <div className="flex flex-col gap-y-8 md:mx-8">
             <h2 className="text-center text-4xl font-bold">
               Featured Projects
             </h2>
             <div className="relative">
-              {/* <StickyScroll content={content} /> */}
               <div className="flex flex-col gap-y-8">
                 {Projects.map((project, index) => (
                   <div
@@ -195,7 +143,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-y-8">
+      <div className="flex flex-col gap-y-8 md:mx-8">
         <h3 className="text-center text-3xl font-bold">What they said</h3>
         <Review />
       </div>

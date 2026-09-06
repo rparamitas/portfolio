@@ -1,10 +1,13 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { redHatText } from "./font";
+import { archivoBlack, spaceGrotesk } from "./font";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { siteConfig } from "@/config/site";
+import { PageIndicator } from "@/components/page-indicator";
+import ConvexClientProvider from "./ConvexClientProvider";
+
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -39,11 +42,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${redHatText.className}`}>
-        <ThemeProvider attribute={"class"} defaultTheme="light">
-          {children}
-        </ThemeProvider>
+    <html lang="en" suppressHydrationWarning >
+      <body className={`${archivoBlack.className} ${spaceGrotesk.className}`}>
+        <ConvexClientProvider>
+          <ThemeProvider attribute={"class"} defaultTheme="light">
+            <PageIndicator />
+            {children}
+          </ThemeProvider>
+        </ConvexClientProvider>
         <Analytics />
         <SpeedInsights />
       </body>

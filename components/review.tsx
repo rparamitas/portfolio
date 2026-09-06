@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 
 import Review1 from "@/public/review/review-1.jpg";

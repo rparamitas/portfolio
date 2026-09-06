@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { ChevronRight, GitCompareArrows, MapPin } from "lucide-react";
 
@@ -25,31 +24,20 @@ export const Logo = () => {
 };
 
 const Footer = () => {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const pathname = usePathname();
 
   if (!listPage.map((item) => item.url).includes(pathname)) {
     return null;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
     <div className="my-12 flex items-center justify-center">
-      <div className="container flex flex-col gap-y-8">
-        <div className="flex flex-col justify-between gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
-          <div className="basis-1/3 text-wrap px-4 text-3xl font-semibold md:px-0">
+      <div className="container flex flex-col gap-y-8 md:mx-8">
+        <div className="mx flex flex-col justify-between gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
+          <div className="basis-1/3 px-4 text-3xl font-semibold text-wrap md:px-0">
             Please feel free to get in touch with us
           </div>
-          <div className="group/item group flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border hover:border-main">
+          <div className="group/item group hover:border-main flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border">
             <div>
               <MapPin className="text-main" size={36} />
             </div>
@@ -68,7 +56,7 @@ const Footer = () => {
               </p>
             </div>
           </div>
-          <div className="group/item flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border hover:border-main">
+          <div className="group/item hover:border-main flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border">
             <div>
               <GitCompareArrows className="text-main" size={36} />
             </div>
@@ -107,14 +95,12 @@ const Footer = () => {
         <Separator orientation="horizontal" />
         <div className="container flex items-center justify-between px-8 md:px-0">
           <Logo />
-          {isSmallScreen ? (
-            <p className="flex items-center justify-center">Made with ♥️</p>
-          ) : (
-            <p className="flex items-center justify-center">
-              Made with ♥️ from Indonesia | 2025 Rahmita
-            </p>
-          )}
-          <div className="flex flex-row space-x-4">
+          <p className="flex items-center justify-center md:hidden">
+            Made with ♥️
+          </p>
+          <p className="hidden items-center justify-center md:flex">
+            Made with ♥️ from Indonesia | 2025 Rahmita
+          </p>          <div className="flex flex-row space-x-4">
             <Tooltip>
               <TooltipTrigger>
                 <Instagram

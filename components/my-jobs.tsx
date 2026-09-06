@@ -2,7 +2,7 @@
 "use client";
 
 import Image, { StaticImageData } from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import defaultImage from "@/public/BlankPhotoProfile.webp";
@@ -68,13 +68,13 @@ const Pagination = ({
   onSlideChange: (index: number) => void;
 }) => {
   return (
-    <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+    <div className="absolute right-0 bottom-4 left-0 flex justify-center space-x-2">
       {Array.from({ length: totalSlides }).map((_, index) => (
         <button
           key={index}
           onClick={() => onSlideChange(index)}
           className={cn(
-            "h-1 w-8 rounded-full transition-all duration-300",
+            "h-1 w-8 rounded-full transition-all duration-300 hover:cursor-pointer",
             index === currentSlide ? "bg-main" : "hover:bg-main/80 bg-gray-300",
           )}
           aria-label={`Go to slide ${index + 1}`}
@@ -99,7 +99,7 @@ const ProgressBar = ({
       )}
     >
       <div
-        className="h-full bg-main transition-all duration-75 ease-linear"
+        className="bg-main h-full transition-all duration-75 ease-linear"
         style={{
           width: `${progress}%`,
         }}
@@ -127,7 +127,7 @@ const Slide = ({
     <div
       className={cn(
         isActive ? "z-10 opacity-100" : "z-0 opacity-0",
-        "absolute left-0 top-0 h-full w-full transition-opacity duration-300 ease-in-out",
+        "absolute top-0 left-0 h-full w-full transition-opacity duration-300 ease-in-out",
       )}
     >
       <div className="flex h-full flex-col items-center justify-center gap-x-20 gap-y-12 p-4 md:flex-row md:p-12">

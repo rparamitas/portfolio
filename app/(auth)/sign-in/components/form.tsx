@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SignInType } from "@/schemas/signIn.schema";

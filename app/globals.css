@@ -1,109 +1,79 @@
 @import 'tailwindcss';
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@theme inline {
+  --font-head: var(--font-head);
+  --font-sans: var(--font-sans);
+  --radius: var(--radius);
 
-@theme {
-  --color-main: var(--main);
-  --color-overlay: var(--overlay);
-  --color-blue: var(--blue);
-  --color-yellow: var(--yellow);
-  --color-red: var(--red);
-  --color-green: var(--green);
-  --color-puple: var(--puple);
-  --color-bg: var(--bg);
-  --color-bw: var(--bw);
-  --color-blank: var(--blank);
-  --color-text: var(--text);
-  --color-mtext: var(--mtext);
+  --shadow-xs: 1px 1px 0 0 var(--border);
+  --shadow-sm: 2px 2px 0 0 var(--border);
+  --shadow: 3px 3px 0 0 var(--border);
+  --shadow-md: 4px 4px 0 0 var(--border);
+  --shadow-lg: 6px 6px 0 0 var(--border);
+  --shadow-xl: 10px 10px 0 1px var(--border);
+  --shadow-2xl: 16px 16px 0 1px var(--border);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-ring-offset: var(--ring-offset);
-  --color-secondary-black: #212121;
-
-  --radius-base: 5px;
-
-  --shadow-shadow: var(--shadow);
-
-  --translate-box-shadow-x: 4px;
-  --translate-box-shadow-y: 4px;
-  --translate-reverse-box-shadow-x: -4px;
-  --translate-reverse-box-shadow-y: -4px;
-
-  --font-weight-base: 500;
-  --font-weight-heading: 700;
-}
-
-@utility container {
-  margin-inline: auto;
-  @media (width >= --theme(--breakpoint-sm)) {
-    max-width: none;
-  }
-  @media (width >= 1280px) {
-    max-width: 1280px;
-  }
-}
-
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
 }
 
 :root {
-  --main: #fd9745;
-  --overlay: rgba(
-    0,
-    0,
-    0,
-    0.8
-  ); /* background color overlay for alert dialogs, modals, etc. */
-  --blue: #8ea9ee;
-  --yellow: #fadd5a;
-  --red: #f6706d;
-  --green: #a8e636;
-  --purple: #a388ee;
-
-  --bg: #fff4e0;
-  --bw: #fff; /* white and secondary black e.g. utility class variant would be: bg-[#fff] dark:bg-[#212121] */
-  --blank: #000; /* blank black and white */
+  --radius: 0;
+  --background: #fff7e8;
+  --foreground: #000;
+  --card: #fff;
+  --card-foreground: #000;
+  --primary: #ffdc58;
+  --primary-hover: #ffd12e;
+  --primary-foreground: #000;
+  --secondary: #000;
+  --secondary-foreground: #fff;
+  --muted: #efe7d6;
+  --muted-foreground: #6b6355;
+  --accent: #ffe7a3;
+  --accent-foreground: #000;
+  --destructive: #e63946;
+  --destructive-foreground: #fff;
   --border: #000;
-  --text: #000;
-  --mtext: #000; /* text that is placed on background with main color e.g. text color of default button */
+  --input: #fff;
   --ring: #000;
-  --ring-offset: #fff;
-
-  --border-radius: 5px;
-  --box-shadow-x: 4px;
-  --box-shadow-y: 4px;
-  --reverse-box-shadow-x: -4px;
-  --reverse-box-shadow-y: -4px;
-  --base-font-weight: 500;
-  --heading-font-weight: 700;
-
-  --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
 }
 
 .dark {
-  --bg: #272933;
-  --bw: #212121;
-  --blank: #fff;
+  --background: #1a1815;
+  --foreground: #f5f0e6;
+  --card: #262320;
+  --card-foreground: #f5f0e6;
+  --primary: #ffdc58;
+  --primary-hover: #ffd12e;
+  --primary-foreground: #000;
+  --secondary: #3a352f;
+  --secondary-foreground: #f5f0e6;
+  --muted: #2e2a24;
+  --muted-foreground: #b3ac9e;
+  --accent: #38342b;
+  --accent-foreground: #f5f0e6;
+  --destructive: #ff6b6b;
+  --destructive-foreground: #1a1815;
   --border: #000;
-  --text: #e6e6e6;
-  --mtext: #000;
-  --ring: #fff;
-  --ring-offset: #000;
-
-  --shadow: var(--box-shadow-x) var(--box-shadow-y) 0px 0px var(--border);
+  --input: #262320;
+  --ring: #ffdc58;
 }

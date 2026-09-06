@@ -1,5 +1,4 @@
 import Image from "next/image";
-import React from "react";
 import MySelf from "@/public/my-photo.png";
 import { cn } from "@/lib/utils";
 import { redHatText } from "../font";

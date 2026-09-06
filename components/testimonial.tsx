@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, CardContent } from "./ui/card";
 import Image, { StaticImageData } from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -56,19 +55,19 @@ const data: TestimonialProps[] = [
 const Testimonial = () => {
   return (
     <div className="">
-      <div className="flex flex-col gap-x-12 md:flex-row">
+      <div className="flex flex-col gap-x-12 px-8 xl:flex-row">
         {data.map((item) => (
           <Card
             key={item.id}
             className={cn(
               item.id % 2 === 0
-                ? "m-8 rotate-2 bg-bw md:m-0 md:rotate-6"
-                : "m-8 -rotate-2 md:m-0 md:-rotate-6",
+                ? "bg-bw m-8 rotate-2 md:m-0 md:rotate-4 xl:rotate-6"
+                : "m-8 -rotate-2 md:m-0 md:-rotate-4 xl:-rotate-6",
             )}
           >
             <CardContent className="">
               <div className="flex flex-col gap-y-8 pt-6">
-                <p className="leading-relaxed tracking-wide">
+                <p className="text-sm leading-relaxed tracking-wide lg:text-base">
                   {item.testimonial}
                 </p>
                 <div className="flex flex-col">
