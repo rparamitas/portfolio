@@ -1,8 +1,9 @@
 import { components } from "./_generated/api";
-import { internalAction, query } from "./_generated/server";
+import { internalAction, internalMutation, query } from "./_generated/server";
 import authSchema from "./betterAuth/schema";
 import { createClient, GenericCtx } from "@convex-dev/better-auth";
 import { convex } from "@convex-dev/better-auth/plugins";
+import { admin } from "better-auth/plugins/admin";
 import { anonymous } from "better-auth/plugins/anonymous";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { genericOAuth } from "better-auth/plugins/generic-oauth";
@@ -25,6 +26,8 @@ import authConfig from "./auth.config";
 
 const siteUrl = process.env.SITE_URL;
 
+const ADMIN_EMAIL = "rparamitas@gmail.com";
+
 export const authComponent = createClient<DataModel, typeof authSchema>(
   components.betterAuth,
   {
@@ -39,6 +42,21 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
   return {
     baseURL: siteUrl,
     database: authComponent.adapter(ctx),
+    // Better Auth's OAuth state cookie defaults to a 5-minute maxAge while the
+    // server-side state record lives 10 minutes. Sitting too long on the
+    // provider's consent screen expires the cookie and the callback fails with
+    // "State not persisted correctly". Extending it to 15 minutes means the
+    // record's own 10-minute expiry is what the user actually hits, and the
+    // callback redirects back to /sign-in with a friendly error instead.
+    advanced: {
+      cookies: {
+        state: {
+          attributes: {
+            maxAge: 60 * 15,
+          },
+        },
+      },
+    },
     account: {
       accountLinking: {
         enabled: true,
@@ -75,17 +93,12 @@ export const createAuthOptions = (ctx: GenericCtx<DataModel>) => {
       },
     },
     user: {
-      additionalFields: {
-        foo: {
-          type: "string",
-          required: false,
-        },
-      },
       deleteUser: {
         enabled: true,
       },
     },
     plugins: [
+      admin(),
       anonymous(),
       username(),
       magicLink({
@@ -153,5 +166,30 @@ export const getUserById = query({
     return ctx.runQuery(components.betterAuth.users.getUser, {
       userId: args.userId,
     });
+  },
+});
+
+// One-time action to promote the admin account. Run with:
+//   npx convex run auth:promoteAdmin
+export const promoteAdmin = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const user = await ctx.runQuery(components.betterAuth.adapter.findOne, {
+      model: "user",
+      where: [{ field: "email", operator: "eq", value: ADMIN_EMAIL }],
+    });
+    if (!user) {
+      throw new Error(
+        `No user found with email ${ADMIN_EMAIL}. They need to sign up first.`,
+      );
+    }
+    await ctx.runMutation(components.betterAuth.adapter.updateOne, {
+      input: {
+        model: "user",
+        where: [{ field: "email", operator: "eq", value: ADMIN_EMAIL }],
+        update: { role: "admin" },
+      },
+    });
+    return { promoted: user._id };
   },
 });

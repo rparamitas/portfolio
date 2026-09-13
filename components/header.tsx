@@ -9,20 +9,24 @@ import { cn } from "@/lib/utils";
 import { josefinSans } from "@/app/font";
 import { ThemeToggle } from "./theme-toggle";
 import { authClient } from "@/lib/auth-client";
+import { Button } from "./ui/button";
 
 const LogoutButton = ({ className }: { className?: string }) => {
-  const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const { data: session } = authClient.useSession();
+  const route = useRouter();
 
   if (!session) {
-    return null;
+    return (
+      <Button variant={"default"} onClick={() => route.push("/sign-in")}>
+        Sign In
+      </Button>
+    )
   }
 
   const handleSignOut = async () => {
     setIsPending(true);
     await authClient.signOut();
-    router.push("/sign-in");
   };
 
   return (

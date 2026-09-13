@@ -11,14 +11,42 @@ import Alert from "@/components/common/alert";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
-import { FaGoogle } from "react-icons/fa";
+import { FaGithub, FaGoogle } from "react-icons/fa";
 
-const SignInForm = () => {
+type SignInFormProps = {
+  redirectTo: string;
+  oauthError?: string;
+};
+
+// Error codes Better Auth appends to errorCallbackURL when the OAuth callback
+// fails (state_mismatch covers expired/interrupted sign-in sessions).
+const OAUTH_ERROR_MESSAGES: Record<string, string> = {
+  state_mismatch:
+    "Your sign-in session expired or was interrupted. Please try signing in again.",
+  access_denied:
+    "Sign-in was cancelled before it was completed. Please try again.",
+  no_code:
+    "The provider didn't return an authorization code. Please try signing in again.",
+  invalid_callback_request:
+    "The sign-in response from the provider was invalid. Please try again.",
+};
+
+const getOAuthErrorMessage = (code: string) =>
+  OAUTH_ERROR_MESSAGES[code] ?? `Sign-in failed. Please try again. (code: ${code})`;
+
+const inputStyles =
+  "border-2 border-black bg-input shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+
+const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const [isGooglePending, setIsGooglePending] = useState(false);
+  const [isGithubPending, setIsGithubPending] = useState(false);
   const [isResendPending, setIsResendPending] = useState(false);
-  const [error, setError] = useState<string | undefined>("");
+  const [rememberMe, setRememberMe] = useState(true);
+  const [error, setError] = useState<string | undefined>(
+    oauthError ? getOAuthErrorMessage(oauthError) : "",
+  );
   const [success, setSuccess] = useState<string | undefined>("");
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
 
@@ -39,6 +67,7 @@ const SignInForm = () => {
     const { error } = await authClient.signIn.email({
       email: data.email,
       password: data.password,
+      rememberMe,
     });
     setIsPending(false);
 
@@ -53,21 +82,32 @@ const SignInForm = () => {
       setError(error.message ?? "Failed to sign in. Please try again.");
       return;
     }
-    router.push("/");
+    router.push(redirectTo);
     router.refresh();
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleSocialSignIn = async (provider: "google" | "github") => {
     setError("");
     setSuccess("");
-    setIsGooglePending(true);
+    if (provider === "google") {
+      setIsGooglePending(true);
+    } else {
+      setIsGithubPending(true);
+    }
     const { error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
+      provider,
+      callbackURL: redirectTo,
+      // Send OAuth callback failures (expired state, cancelled consent, ...)
+      // back to this page instead of Better Auth's default error page.
+      errorCallbackURL: `/sign-in?redirect=${encodeURIComponent(redirectTo)}`,
     });
     if (error) {
-      setIsGooglePending(false);
-      setError(error.message ?? "Failed to start Google sign-in. Please try again.");
+      if (provider === "google") {
+        setIsGooglePending(false);
+      } else {
+        setIsGithubPending(false);
+      }
+      setError(error.message ?? "Failed to start sign-in. Please try again.");
     }
   };
 
@@ -76,7 +116,7 @@ const SignInForm = () => {
     setIsResendPending(true);
     const { error } = await authClient.sendVerificationEmail({
       email,
-      callbackURL: "/",
+      callbackURL: redirectTo,
     });
     setIsResendPending(false);
 
@@ -90,41 +130,31 @@ const SignInForm = () => {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <form onSubmit={handleSubmit(handleSubmitForm)} className="w-full">
-        <FormField
-          id="email"
-          register={register}
-          errors={errors}
-          placeholder="Input your email"
-          type="email"
-          disabled={isPending}
-        />
-        <FormField
-          id="password"
-          register={register}
-          errors={errors}
-          placeholder="Input your password"
-          type="password"
-          disabled={isPending}
-        />
-        {error && <Alert error message={error} />}
-        {success && <Alert success message={success} />}
-        <Button type="submit" className="w-full" disabled={isPending}>
-          {isPending ? "Signing in..." : "Sign In"}
-        </Button>
-      </form>
+      {error && <Alert error message={error} />}
+      {success && <Alert success message={success} />}
 
-      {unverifiedEmail && (
+      <div className="flex flex-col gap-3">
         <Button
           type="button"
           variant="secondary"
           className="w-full"
-          disabled={isResendPending}
-          onClick={handleResendVerification}
+          disabled={isGooglePending || isPending}
+          onClick={() => handleSocialSignIn("google")}
         >
-          {isResendPending ? "Resending..." : "Resend verification email"}
+          <FaGoogle />
+          {isGooglePending ? "Redirecting to Google..." : "Continue with Google"}
         </Button>
-      )}
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-full"
+          disabled={isGithubPending || isPending}
+          onClick={() => handleSocialSignIn("github")}
+        >
+          <FaGithub />
+          {isGithubPending ? "Redirecting to GitHub..." : "Continue with GitHub"}
+        </Button>
+      </div>
 
       <div className="flex items-center gap-2">
         <Separator className="flex-1" />
@@ -132,16 +162,60 @@ const SignInForm = () => {
         <Separator className="flex-1" />
       </div>
 
-      <Button
-        type="button"
-        variant="outline"
-        className="w-full"
-        disabled={isGooglePending || isPending}
-        onClick={handleGoogleSignIn}
-      >
-        <FaGoogle />
-        {isGooglePending ? "Redirecting to Google..." : "Sign in with Google"}
-      </Button>
+      <form onSubmit={handleSubmit(handleSubmitForm)} className="w-full">
+        <FormField
+          id="email"
+          label="Email"
+          register={register}
+          errors={errors}
+          placeholder="you@example.com"
+          type="email"
+          disabled={isPending}
+          inputClassName={inputStyles}
+        />
+        <FormField
+          id="password"
+          label="Password"
+          register={register}
+          errors={errors}
+          placeholder="••••••••"
+          type="password"
+          disabled={isPending}
+          inputClassName={inputStyles}
+        />
+
+        <div className="my-2 flex items-center justify-between">
+          <label
+            htmlFor="remember"
+            className="flex cursor-pointer items-center gap-2 text-sm font-medium"
+          >
+            <input
+              id="remember"
+              type="checkbox"
+              checked={rememberMe}
+              onChange={(e) => setRememberMe(e.target.checked)}
+              className="size-4 cursor-pointer appearance-none border-2 border-black bg-white shadow-xs checked:bg-primary"
+            />
+            Remember me
+          </label>
+        </div>
+
+        {unverifiedEmail && (
+          <Button
+            type="button"
+            variant="outline"
+            className="mb-2 w-full"
+            disabled={isResendPending}
+            onClick={handleResendVerification}
+          >
+            {isResendPending ? "Resending..." : "Resend verification email"}
+          </Button>
+        )}
+
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Signing in..." : "Sign In"}
+        </Button>
+      </form>
 
       <p className="text-center text-sm text-muted-foreground">
         Don&apos;t have an account?{" "}

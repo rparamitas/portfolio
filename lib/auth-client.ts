@@ -3,6 +3,7 @@
 import { createAuthClient } from "better-auth/react"
 import { convexClient } from "@convex-dev/better-auth/client/plugins"
 import {
+  adminClient,
   twoFactorClient,
   magicLinkClient,
   emailOTPClient,
@@ -15,6 +16,7 @@ export const authClient = createAuthClient({
   plugins: [
     convexClient(),
     inferAdditionalFields<typeof auth>(),
+    adminClient(),
     twoFactorClient(),
     magicLinkClient(),
     emailOTPClient(),

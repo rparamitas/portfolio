@@ -31,14 +31,17 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
           input:
             | {
                 data: {
+                  banExpires?: null | number;
+                  banReason?: null | string;
+                  banned?: null | boolean;
                   createdAt: number;
                   displayUsername?: null | string;
                   email: string;
                   emailVerified: boolean;
-                  foo?: null | string;
                   image?: null | string;
                   isAnonymous?: null | boolean;
                   name: string;
+                  role?: null | string;
                   twoFactorEnabled?: null | boolean;
                   updatedAt: number;
                   userId?: null | string;
@@ -50,6 +53,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                 data: {
                   createdAt: number;
                   expiresAt: number;
+                  impersonatedBy?: null | string;
                   ipAddress?: null | string;
                   token: string;
                   updatedAt: number;
@@ -127,12 +131,15 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "image"
                     | "createdAt"
                     | "updatedAt"
+                    | "role"
+                    | "banned"
+                    | "banReason"
+                    | "banExpires"
                     | "isAnonymous"
                     | "username"
                     | "displayUsername"
                     | "twoFactorEnabled"
                     | "userId"
-                    | "foo"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -168,6 +175,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "ipAddress"
                     | "userAgent"
                     | "userId"
+                    | "impersonatedBy"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -359,12 +367,15 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "image"
                     | "createdAt"
                     | "updatedAt"
+                    | "role"
+                    | "banned"
+                    | "banReason"
+                    | "banExpires"
                     | "isAnonymous"
                     | "username"
                     | "displayUsername"
                     | "twoFactorEnabled"
                     | "userId"
-                    | "foo"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -400,6 +411,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "ipAddress"
                     | "userAgent"
                     | "userId"
+                    | "impersonatedBy"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -658,14 +670,17 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
             | {
                 model: "user";
                 update: {
+                  banExpires?: null | number;
+                  banReason?: null | string;
+                  banned?: null | boolean;
                   createdAt?: number;
                   displayUsername?: null | string;
                   email?: string;
                   emailVerified?: boolean;
-                  foo?: null | string;
                   image?: null | string;
                   isAnonymous?: null | boolean;
                   name?: string;
+                  role?: null | string;
                   twoFactorEnabled?: null | boolean;
                   updatedAt?: number;
                   userId?: null | string;
@@ -680,12 +695,15 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "image"
                     | "createdAt"
                     | "updatedAt"
+                    | "role"
+                    | "banned"
+                    | "banReason"
+                    | "banExpires"
                     | "isAnonymous"
                     | "username"
                     | "displayUsername"
                     | "twoFactorEnabled"
                     | "userId"
-                    | "foo"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -714,6 +732,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                 update: {
                   createdAt?: number;
                   expiresAt?: number;
+                  impersonatedBy?: null | string;
                   ipAddress?: null | string;
                   token?: string;
                   updatedAt?: number;
@@ -730,6 +749,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "ipAddress"
                     | "userAgent"
                     | "userId"
+                    | "impersonatedBy"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -948,14 +968,17 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
             | {
                 model: "user";
                 update: {
+                  banExpires?: null | number;
+                  banReason?: null | string;
+                  banned?: null | boolean;
                   createdAt?: number;
                   displayUsername?: null | string;
                   email?: string;
                   emailVerified?: boolean;
-                  foo?: null | string;
                   image?: null | string;
                   isAnonymous?: null | boolean;
                   name?: string;
+                  role?: null | string;
                   twoFactorEnabled?: null | boolean;
                   updatedAt?: number;
                   userId?: null | string;
@@ -970,12 +993,15 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "image"
                     | "createdAt"
                     | "updatedAt"
+                    | "role"
+                    | "banned"
+                    | "banReason"
+                    | "banExpires"
                     | "isAnonymous"
                     | "username"
                     | "displayUsername"
                     | "twoFactorEnabled"
                     | "userId"
-                    | "foo"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -1004,6 +1030,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                 update: {
                   createdAt?: number;
                   expiresAt?: number;
+                  impersonatedBy?: null | string;
                   ipAddress?: null | string;
                   token?: string;
                   updatedAt?: number;
@@ -1020,6 +1047,7 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
                     | "ipAddress"
                     | "userAgent"
                     | "userId"
+                    | "impersonatedBy"
                     | "_id";
                   mode?: "sensitive" | "insensitive";
                   operator?:
@@ -1231,14 +1259,17 @@ export type ComponentApi<Name extends string | undefined = string | undefined> =
         null | {
           _creationTime: number;
           _id: string;
+          banExpires?: null | number;
+          banReason?: null | string;
+          banned?: null | boolean;
           createdAt: number;
           displayUsername?: null | string;
           email: string;
           emailVerified: boolean;
-          foo?: null | string;
           image?: null | string;
           isAnonymous?: null | boolean;
           name: string;
+          role?: null | string;
           twoFactorEnabled?: null | boolean;
           updatedAt: number;
           userId?: null | string;

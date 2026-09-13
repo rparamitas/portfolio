@@ -10,7 +10,11 @@ import Alert from "@/components/common/alert";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
 
-const SignUpForm = () => {
+type SignUpFormProps = {
+  redirectTo: string;
+};
+
+const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
   const [isPending, setIsPending] = useState(false);
   const [isResendPending, setIsResendPending] = useState(false);
   const [error, setError] = useState<string | undefined>("");
@@ -49,7 +53,7 @@ const SignUpForm = () => {
     setIsResendPending(true);
     const { error } = await authClient.sendVerificationEmail({
       email: submittedEmail,
-      callbackURL: "/",
+      callbackURL: redirectTo,
     });
     setIsResendPending(false);
 

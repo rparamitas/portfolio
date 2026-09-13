@@ -1,9 +1,16 @@
 import SignUpForm from "./components/form";
+import { safeRedirectTo } from "@/lib/utils";
 
-const SignUpPage = async () => {
+type SignUpPageProps = {
+  searchParams: Promise<{ redirect?: string | string[] }>;
+};
+
+const SignUpPage = async ({ searchParams }: SignUpPageProps) => {
+  const { redirect } = await searchParams;
+
   return (
     <div>
-      <SignUpForm />
+      <SignUpForm redirectTo={safeRedirectTo(redirect)} />
     </div>
   );
 };
