@@ -1,151 +1,178 @@
-"use client";
-
 import Image from "next/image";
-import PhotoProfile from "@/public/my-photo.png";
-import Testimonial from "@/components/testimonial";
-import MyJobs from "@/components/my-jobs";
-import { Projects } from "@/data/projects";
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import Review from "@/components/review";
+import { ArrowRight, Download } from "lucide-react";
 
+import PhotoProfile from "@/public/rahmita.png";
+import TestimonialQuoteGrid from "@/components/testimonial-quote-grid";
+import About from "@/components/about";
+import ServicesCarousel from "@/components/services-carousel";
+import ProjectsList from "@/components/projects-list";
+import ReviewMarquee from "@/components/review-marquee";
+import ContactDialog from "@/components/contact-dialog";
+import { Button } from "@/components/ui/button";
+import { BurstShape, LightningShape, Star5Shape } from "@/components/ui/shapes";
+import { cn } from "@/lib/utils";
+
+// Home page section order (see README "Home page section order"):
+// Hero → About → Services → Featured Projects → Testimonials → Footer.
 export default function Home() {
   return (
     <div>
-      <div className="bg-bg flex items-center justify-center">
-        <div className="container flex flex-col items-center justify-between gap-x-16 gap-y-8 px-8 lg:flex-row xl:px-0">
-          <div className="mt-12 flex h-full flex-1 flex-col justify-center gap-y-8 md:mt-0">
-            <p className="mt-4 text-center text-xl md:text-left">
-              Hi, my name is{" "}
-              <span className="decoration-red hover:cursor-default hover:underline">
-                Rahmita Paramita Sudirman
-              </span>
-            </p>
-            <h1 className="text-center text-4xl font-bold text-pretty md:text-left md:text-6xl">
-              I create solutions for beauty growth.
-            </h1>
-            <p className="text-center text-lg text-pretty md:text-left">
-              I&apos;m a Product Development Specialist based in Indonesia, with
-              extensive experience in R&D for cosmetic products, and i
-              successfully made customers reorder cosmetic products as much as
-              10000+ pcs in each month.
-            </p>
-            <div className="flex flex-row gap-x-4">
-              <Button
-                className="w-fit self-center md:self-start"
-                variant={"default"}
-              >
-                <Link href={"mailto:email@rahmita.my.id"}>Get in touch</Link>
-              </Button>
-              <Button variant="secondary" className="">
-                <Link
-                  href={"/cv-rahmita.pdf"}
-                  download={"cv-rahmita-paramita-sudirman.pdf"}
+      {/* Hero */}
+      <section
+        aria-labelledby="hero-heading"
+        className="border-border bg-muted relative overflow-hidden border-y-2 px-4 py-20 lg:px-8"
+      >
+        {/* Stepped brutalist decor — the lightning sits in the bottom
+            padding band, clear of content at every breakpoint */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 hidden lg:block"
+        >
+          <LightningShape
+            size={64}
+            strokeWidth={4}
+            animation="wiggle-step"
+            speed="fast"
+            className="absolute bottom-8 left-[4%] stroke-(--border) text-(--destructive)"
+          />
+        </div>
+        <div className="container mx-auto w-full">
+          <div className="flex w-full flex-col items-center justify-between gap-8 md:flex-row md:gap-12 xl:gap-16">
+            <div className="relative order-2 flex flex-1 flex-col items-center text-center md:order-1 md:items-start md:text-left">
+              <Star5Shape
+                size={52}
+                strokeWidth={5}
+                animation="spin-step"
+                speed="slow"
+                className="pointer-events-none absolute -top-10 -left-10 hidden stroke-(--border) text-(--primary) lg:block"
+              />
+              <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-backwards duration-500">
+                <p className="font-sans text-base lg:text-lg">
+                  Hi, my name is Rahmita Paramita Sudirman
+                </p>
+                <h1
+                  id="hero-heading"
+                  className="font-head mt-4 text-4xl leading-tight font-medium lg:text-5xl"
+                >
+                  I turn ideas <br />
+                  into{" "}
+                  <span className="border-border bg-primary text-primary-foreground mt-3 inline-block rotate-3 border-2 px-2">
+                    realities.
+                  </span>
+                </h1>
+              </div>
+              <p className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-backwards mt-4 max-w-xl font-sans text-base duration-500 [animation-delay:100ms] lg:text-lg">
+                I&apos;m a Product Development Specialist based in Indonesia,
+                with extensive experience in R&amp;D for cosmetic products, and
+                I successfully made customers reorder cosmetic products as much
+                as 10000+ pcs in each month.
+              </p>
+              <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-backwards mt-8 flex flex-row gap-x-4 duration-500 [animation-delay:200ms]">
+                <ContactDialog />
+                <Button
+                  size="lg"
+                  variant="secondary"
+                  nativeButton={false}
+                  render={
+                    <Link
+                      href="/cv-rahmita.pdf"
+                      download="cv-rahmita-paramita-sudirman.pdf"
+                    />
+                  }
                 >
                   Download CV
-                </Link>
-              </Button>
+                  <Download className="size-5" aria-hidden="true" />
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="flex flex-1 items-center justify-center">
-            <div className="relative h-[500px] w-[400px] md:h-[700px] md:w-[600px]">
-              <Image
-                src={PhotoProfile}
-                alt="My Photo"
-                sizes="100vw"
-                fill
-                style={{
-                  objectFit: "cover",
-                  objectPosition: "center",
-                }}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="bg-bw flex items-center justify-center">
-        <div className="container flex flex-col py-20">
-          <div className="flex flex-col gap-y-24">
-            <h2 className="text-center text-4xl font-bold">
-              Don&apos;t just take our words. Over 70+ people trust me.
-            </h2>
-            <div className="flex flex-row">
-              <Testimonial />
+            <div className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-4 motion-safe:fill-mode-backwards order-1 flex w-full flex-1 items-center justify-center duration-500 [animation-delay:300ms] md:order-2 md:justify-end">
+              <div className="relative w-full max-w-sm">
+                <BurstShape
+                  size={72}
+                  strokeWidth={5}
+                  animation="pulse-hard"
+                  speed="slow"
+                  className="pointer-events-none absolute -top-8 -right-4 hidden stroke-(--border) text-(--primary) md:block lg:-right-8"
+                />
+                <div className="border-border bg-card relative border-2 shadow-xl">
+                  <Image
+                    src={PhotoProfile}
+                    alt="Rahmita Paramita Sudirman"
+                    priority
+                    sizes="(max-width: 768px) 100vw, 384px"
+                    className="h-auto w-full grayscale transition duration-700 ease-in-out hover:grayscale-0"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="bg-bg flex items-center justify-center">
+      </section>
+
+      {/* About */}
+      <About />
+
+      {/* Services */}
+      {/* `scroll-mt` clears the pinned navbar when /#services lands here. */}
+      <div
+        id="services"
+        className="flex scroll-mt-24 items-center justify-center"
+      >
         <div className="container flex flex-col py-20">
           <div className="flex flex-col gap-y-24">
             <h2 className="text-center text-4xl font-bold">
               What I can do for you
             </h2>
-            <div>
-              <MyJobs />
-            </div>
+            <ServicesCarousel />
           </div>
         </div>
       </div>
-      <div className="bg-bw flex items-center justify-center">
+
+      {/* Featured Projects (subset + view all) */}
+      <div className="bg-muted flex items-center justify-center">
+        <div className="container flex flex-col gap-y-10 py-20">
+          <h2 className="text-center text-4xl font-bold">Featured Projects</h2>
+          <ProjectsList limit={3} />
+          <Button
+            size="lg"
+            variant="secondary"
+            nativeButton={false}
+            render={<Link href="/projects" />}
+            className={cn("self-center")}
+          >
+            View all projects
+            <ArrowRight className="size-5" aria-hidden="true" />
+          </Button>
+        </div>
+      </div>
+
+      {/* Social proof (quotes + WhatsApp screenshots, merged) */}
+      <div className="flex items-center justify-center">
         <div className="container flex flex-col py-20">
-          <div className="flex flex-col gap-y-8 md:mx-8">
-            <h2 className="text-center text-4xl font-bold">
-              Featured Projects
-            </h2>
-            <div className="relative">
-              <div className="flex flex-col gap-y-8">
-                {Projects.map((project, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "my-6 flex w-full flex-row items-center justify-center gap-x-8 gap-y-6 md:my-0 md:gap-y-0",
-                      index % 2 === 0
-                        ? "flex-col md:flex-row-reverse"
-                        : "flex-col md:flex-row",
-                    )}
-                  >
-                    <div className="w-[400px] flex-1">
-                      {project.image &&
-                        (Array.isArray(project.image) ? (
-                          <Image src={project.image[0]} alt={project.title} />
-                        ) : (
-                          <Image src={project.image} alt={project.title} />
-                        ))}
-                    </div>
-                    <div className="flex flex-1 flex-col gap-y-4 text-center md:text-start">
-                      <p className="text-3xl font-bold">{project.title}</p>
-                      <div className="flex flex-row justify-center gap-x-2 md:justify-start">
-                        {project.category?.map((item) => (
-                          <Badge key={item} variant={"default"}>
-                            {item}
-                          </Badge>
-                        ))}
-                      </div>
-                      <p className="mx-8 text-pretty md:mx-0">
-                        {project.description}
-                      </p>
-                      {project.link && (
-                        <Button
-                          className="w-fit self-center md:self-start"
-                          variant="secondary"
-                        >
-                          <Link href={project.link}>Go to view</Link>
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                ))}
+          <div className="flex flex-col gap-y-16">
+            <div className="flex flex-col items-center gap-y-2 text-center">
+              <p className="font-head text-muted-foreground text-sm font-medium tracking-wide uppercase">
+                What our customers say
+              </p>
+              <h2 className="text-center text-4xl font-bold">
+                Don&apos;t just take our words. Over 70+ people trust me.
+              </h2>
+            </div>
+            <TestimonialQuoteGrid />
+            <div className="flex flex-col gap-y-10 md:mx-8">
+              <div className="flex flex-col gap-y-2">
+                <h3 className="text-center text-3xl font-bold">
+                  What they said
+                </h3>
+                <p className="text-muted-foreground text-center font-sans text-sm">
+                  Click any chat to zoom in
+                </p>
               </div>
+              <ReviewMarquee />
             </div>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-y-8 md:mx-8">
-        <h3 className="text-center text-3xl font-bold">What they said</h3>
-        <Review />
       </div>
     </div>
   );

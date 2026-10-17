@@ -1,13 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { archivoBlack, spaceGrotesk } from "./font";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { siteConfig } from "@/config/site";
 import { PageIndicator } from "@/components/page-indicator";
 import ConvexClientProvider from "./ConvexClientProvider";
-
+import { archivoBlack, jetBrainsMono, spaceGrotesk } from "./font";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -20,15 +19,14 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [
-      {
-        url: new URL("opengraph-image.png", siteConfig.url).toString(),
-        width: 1200,
-        height: 630,
-        alt: siteConfig.name,
-      },
-    ],
     type: "website",
+  },
+  // twitter:image comes from the twitter-image.tsx file convention; the card
+  // type still has to be declared manually.
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
   },
 };
 
@@ -42,8 +40,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning >
-      <body className={`${archivoBlack.className} ${spaceGrotesk.className}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${spaceGrotesk.variable} ${archivoBlack.variable} ${jetBrainsMono.variable}`}
+    >
+      <body className="selection:bg-primary selection:text-accent">
         <ConvexClientProvider>
           <ThemeProvider attribute={"class"} defaultTheme="light">
             <PageIndicator />

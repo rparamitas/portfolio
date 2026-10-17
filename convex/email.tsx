@@ -2,6 +2,7 @@ import VerifyEmail from "./emails/verifyEmail";
 import MagicLinkEmail from "./emails/magicLink";
 import VerifyOTP from "./emails/verifyOTP";
 import ResetPasswordEmail from "./emails/resetPassword";
+import ContactMessageEmail from "./emails/contactMessage";
 import { render } from "@react-email/components";
 import { components } from "./_generated/api";
 import { Resend } from "@convex-dev/resend";
@@ -83,5 +84,39 @@ export const sendResetPassword = async (
     to,
     subject: "Reset your password",
     html: await render(<ResetPasswordEmail url={url} />),
+  });
+};
+
+// Notification for messages submitted via the hero "Get in touch" dialog —
+// `replyTo` points at the sender so Rahmita can answer straight from her inbox.
+export const sendContactMessageNotification = async (
+  ctx: ActionCtx,
+  {
+    to,
+    name,
+    email,
+    title,
+    body,
+  }: {
+    to: string;
+    name: string;
+    email: string;
+    title: string;
+    body: string;
+  },
+) => {
+  await resend.sendEmail(ctx, {
+    from: EMAIL_FROM,
+    to,
+    replyTo: [email],
+    subject: `Portfolio message: ${title}`,
+    html: await render(
+      <ContactMessageEmail
+        name={name}
+        email={email}
+        title={title}
+        body={body}
+      />,
+    ),
   });
 };

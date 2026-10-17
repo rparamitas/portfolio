@@ -6,9 +6,9 @@ export const WEEKDAYS = [
   "Friday",
   "Saturday",
   "Sunday",
-] as const
+] as const;
 
-export type Weekday = (typeof WEEKDAYS)[number]
+export type Weekday = (typeof WEEKDAYS)[number];
 
 export const MEAL_SLOTS = [
   "breakfast",
@@ -16,23 +16,23 @@ export const MEAL_SLOTS = [
   "lunch",
   "snack-afternoon",
   "dinner",
-] as const
+] as const;
 
-export type MealSlot = (typeof MEAL_SLOTS)[number]
+export type MealSlot = (typeof MEAL_SLOTS)[number];
 
-export type Persona = "adult" | "children"
+export type Persona = "adult" | "children";
 
 export interface Meal {
-  name: string
-  ingredients: string[]
-  note?: string
+  name: string;
+  ingredients: string[];
+  note?: string;
 }
 
-export type PersonaMenu = Record<MealSlot, Meal>
+export type PersonaMenu = Record<MealSlot, Meal>;
 
-export type DayMenuPlan = Record<Persona, PersonaMenu>
+export type DayMenuPlan = Record<Persona, PersonaMenu>;
 
-export type WeeklyMenuPlan = Record<Weekday, DayMenuPlan>
+export type WeeklyMenuPlan = Record<Weekday, DayMenuPlan>;
 
 export const SLOT_LABELS: Record<MealSlot, string> = {
   breakfast: "Breakfast",
@@ -40,14 +40,21 @@ export const SLOT_LABELS: Record<MealSlot, string> = {
   lunch: "Lunch",
   "snack-afternoon": "Afternoon snack",
   dinner: "Dinner",
-}
+};
 
 export const menuPlan: WeeklyMenuPlan = {
   Monday: {
     adult: {
       breakfast: {
         name: "Bubur Ayam",
-        ingredients: ["beras", "dada ayam", "jahe", "daun bawang", "bawang goreng", "kecap manis"],
+        ingredients: [
+          "beras",
+          "dada ayam",
+          "jahe",
+          "daun bawang",
+          "bawang goreng",
+          "kecap manis",
+        ],
         note: "Fresh cooked in the morning",
       },
       "snack-morning": {
@@ -56,7 +63,14 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       lunch: {
         name: "Ayam Goreng Lengkuas + Nasi + Lalapan",
-        ingredients: ["ayam", "lengkuas", "bawang putih", "kunyit", "nasi", "timun"],
+        ingredients: [
+          "ayam",
+          "lengkuas",
+          "bawang putih",
+          "kunyit",
+          "nasi",
+          "timun",
+        ],
         note: "Cooked in the morning batch, kept until afternoon",
       },
       "snack-afternoon": {
@@ -105,7 +119,13 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       lunch: {
         name: "Ikan Bakar + Tumis Kangkung",
-        ingredients: ["ikan kembung", "kangkung", "bawang putih", "cabai merah", "nasi"],
+        ingredients: [
+          "ikan kembung",
+          "kangkung",
+          "bawang putih",
+          "cabai merah",
+          "nasi",
+        ],
         note: "Marinated and grilled in the morning batch",
       },
       "snack-afternoon": {
@@ -138,7 +158,13 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       dinner: {
         name: "Sup Wortel Kentang",
-        ingredients: ["kentang", "wortel", "ayam cincang", "daun bawang", "susu"],
+        ingredients: [
+          "kentang",
+          "wortel",
+          "ayam cincang",
+          "daun bawang",
+          "susu",
+        ],
       },
     },
   },
@@ -155,7 +181,14 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       lunch: {
         name: "Rendang Daging + Nasi",
-        ingredients: ["daging sapi", "santan kelapa", "cabai merah", "lengkuas", "serai", "nasi"],
+        ingredients: [
+          "daging sapi",
+          "santan kelapa",
+          "cabai merah",
+          "lengkuas",
+          "serai",
+          "nasi",
+        ],
         note: "Slow-cooked in the morning batch",
       },
       "snack-afternoon": {
@@ -245,7 +278,13 @@ export const menuPlan: WeeklyMenuPlan = {
     adult: {
       breakfast: {
         name: "Nasi Uduk + Tempe Orek",
-        ingredients: ["nasi", "santan kelapa", "tempe", "kecap manis", "kacang tanah"],
+        ingredients: [
+          "nasi",
+          "santan kelapa",
+          "tempe",
+          "kecap manis",
+          "kacang tanah",
+        ],
         note: "Fresh cooked in the morning",
       },
       "snack-morning": {
@@ -254,7 +293,13 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       lunch: {
         name: "Gado-Gado",
-        ingredients: ["sayur campur", "tahu", "telur", "bumbu kacang", "lontong"],
+        ingredients: [
+          "sayur campur",
+          "tahu",
+          "telur",
+          "bumbu kacang",
+          "lontong",
+        ],
         note: "Peanut sauce prepared in the morning batch",
       },
       "snack-afternoon": {
@@ -287,7 +332,13 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       dinner: {
         name: "Spaghetti Bolognese",
-        ingredients: ["spaghetti", "daging sapi cincang", "saus tomat", "wortel", "keju"],
+        ingredients: [
+          "spaghetti",
+          "daging sapi cincang",
+          "saus tomat",
+          "wortel",
+          "keju",
+        ],
       },
     },
   },
@@ -303,7 +354,13 @@ export const menuPlan: WeeklyMenuPlan = {
       },
       lunch: {
         name: "Sate Ayam + Lontong",
-        ingredients: ["ayam", "bumbu kacang", "lontong", "kecap manis", "bawang merah"],
+        ingredients: [
+          "ayam",
+          "bumbu kacang",
+          "lontong",
+          "kecap manis",
+          "bawang merah",
+        ],
         note: "Skewers grilled in the morning batch",
       },
       "snack-afternoon": {
@@ -388,11 +445,11 @@ export const menuPlan: WeeklyMenuPlan = {
       },
     },
   },
-}
+};
 
 export function menuForDate(date: Date): DayMenuPlan {
-  const index = (date.getDay() + 6) % 7
-  return menuPlan[WEEKDAYS[index]]
+  const index = (date.getDay() + 6) % 7;
+  return menuPlan[WEEKDAYS[index]];
 }
 
 export const ALL_INGREDIENTS: string[] = Array.from(
@@ -403,4 +460,4 @@ export const ALL_INGREDIENTS: string[] = Array.from(
         .flatMap((meal) => meal.ingredients),
     ),
   ),
-).sort()
+).sort();

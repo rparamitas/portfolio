@@ -1,16 +1,16 @@
-import { clsx, type ClassValue } from "clsx"
-import { twMerge } from "tailwind-merge"
-import { ConvexError } from 'convex/values'
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { ConvexError } from "convex/values";
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
+  return twMerge(clsx(inputs));
 }
 
 // Only same-site paths are safe as a post-auth redirect target; anything
 // else (absolute URLs, protocol-relative '//', backslashes) could bounce
 // the user off the app.
 export const safeRedirectTo = (value: string | string[] | undefined) => {
-  const candidate = Array.isArray(value) ? value[0] : value
+  const candidate = Array.isArray(value) ? value[0] : value;
 
   if (
     candidate &&
@@ -18,14 +18,17 @@ export const safeRedirectTo = (value: string | string[] | undefined) => {
     !candidate.startsWith("//") &&
     !candidate.includes("\\")
   ) {
-    return candidate
+    return candidate;
   }
 
-  return "/"
-}
+  return "/";
+};
 
 export const isAuthError = (error: unknown) => {
-  const message = (error instanceof ConvexError && error.data) || (error instanceof Error && error.message) || ""
+  const message =
+    (error instanceof ConvexError && error.data) ||
+    (error instanceof Error && error.message) ||
+    "";
 
-  return /auth/i.test(message)
-}
+  return /auth/i.test(message);
+};

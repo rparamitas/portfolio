@@ -1,10 +1,22 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../styles/motion.css";
+
+/*
+ * Tailwind v4's default `container` scales with breakpoints (48rem → 96rem),
+ * so on large screens it outgrew the 5xl content column. Overriding the
+ * utility pins every `container` to 5xl (64rem); an explicit `max-w-*` on the
+ * same element still wins the cascade where a wider column is wanted.
+ */
+@utility container {
+  width: 100%;
+  margin-inline: auto;
+  max-width: var(--container-5xl);
+}
 
 @theme inline {
-  --font-head: var(--font-head);
-  --font-sans: var(--font-sans);
+  --font-head: var(--font-archivo-black), sans-serif;
   --radius: var(--radius);
 
   --shadow-xs: 1px 1px 0 0 var(--border);
@@ -33,6 +45,10 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  --font-sans: var(--font-space-grotesk), sans-serif;
+  --font-heading: var(--font-archivo-black), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
 }
 
 :root {
@@ -76,4 +92,27 @@
   --border: #000;
   --input: #262320;
   --ring: #ffdc58;
+}
+
+/*
+ * Marquee keyframes for the customer-review wall (components/review-marquee).
+ * The card row is rendered twice side by side and the track shifts by exactly
+ * one copy's width — -50% / 0% loops seamlessly in either direction.
+ */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
 }

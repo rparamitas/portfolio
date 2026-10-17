@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from "react"
-import Link from "next/link"
-import { useQuery } from "convex/react"
+import { useMemo, useState } from "react";
+import Link from "next/link";
+import { useAction, useQuery } from "convex/react";
 import {
   Apple,
   Baby,
@@ -12,20 +12,21 @@ import {
   Cookie,
   Info,
   Moon,
+  Send,
   Sunrise,
   UtensilsCrossed,
   Users,
   type LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-import { api } from "@/convex/_generated/api"
-import type { Doc } from "@/convex/_generated/dataModel"
+import { api } from "@/convex/_generated/api";
+import type { Doc } from "@/convex/_generated/dataModel";
 import {
   MEAL_SLOTS,
   SLOT_LABELS,
   type MealSlot,
   type Persona,
-} from "@/data/menu"
+} from "@/data/menu";
 import {
   addDays,
   addMonths,
@@ -33,6 +34,7 @@ import {
   formatDay,
   formatDayShort,
   formatMonthYear,
+  formatTimestamp,
   formatWeekRange,
   getMonthGrid,
   getWeekDates,
@@ -41,9 +43,9 @@ import {
   startOfWeek,
   toDateKey,
   WEEKDAYS_SHORT,
-} from "@/lib/date"
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
+} from "@/lib/date";
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardAction,
@@ -51,9 +53,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import Alert from "@/components/common/alert";
 
 const SLOT_ICONS: Record<MealSlot, LucideIcon> = {
   breakfast: Sunrise,
@@ -61,13 +64,13 @@ const SLOT_ICONS: Record<MealSlot, LucideIcon> = {
   lunch: UtensilsCrossed,
   "snack-afternoon": Cookie,
   dinner: Moon,
-}
+};
 
 const PERSONAS: {
-  persona: Persona
-  title: string
-  description: string
-  icon: LucideIcon
+  persona: Persona;
+  title: string;
+  description: string;
+  icon: LucideIcon;
 }[] = [
   {
     persona: "adult",
@@ -81,76 +84,114 @@ const PERSONAS: {
     description: "Kid-friendly, mild seasoning, no chilies.",
     icon: Baby,
   },
-]
+];
 
-type MenuView = "day" | "week" | "month"
+type MenuView = "day" | "week" | "month";
 
 const VIEW_OPTIONS: { value: MenuView; label: string }[] = [
   { value: "day", label: "Day" },
   { value: "week", label: "Week" },
   { value: "month", label: "Month" },
-]
+];
 
 const chipClassName = cn(
   "cursor-pointer rounded border-2 px-4 py-1.5 font-head text-sm font-semibold whitespace-nowrap transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
-)
+);
 
 export function MenuDailyView() {
-  const [view, setView] = useState<MenuView>("day")
-  const [anchor, setAnchor] = useState(() => new Date())
-  const [persona, setPersona] = useState<Persona>("adult")
+  const [view, setView] = useState<MenuView>("day");
+  const [anchor, setAnchor] = useState(() => new Date());
+  const [persona, setPersona] = useState<Persona>("adult");
+  const [telegramAlert, setTelegramAlert] = useState<{
+    success?: boolean;
+    error?: boolean;
+    message: string;
+  } | null>(null);
+  const [sending, setSending] = useState(false);
 
-  const today = new Date()
+  const today = new Date();
 
   const { start, end } = useMemo(() => {
     if (view === "day") {
-      const key = toDateKey(anchor)
-      return { start: key, end: key }
+      const key = toDateKey(anchor);
+      return { start: key, end: key };
     }
     if (view === "week") {
-      const week = getWeekDates(anchor)
-      return { start: toDateKey(week[0]), end: toDateKey(week[6]) }
+      const week = getWeekDates(anchor);
+      return { start: toDateKey(week[0]), end: toDateKey(week[6]) };
     }
     return {
       start: toDateKey(startOfMonth(anchor)),
       end: toDateKey(endOfMonth(anchor)),
-    }
-  }, [view, anchor])
+    };
+  }, [view, anchor]);
 
-  const entries = useQuery(api.menu.listByRange, { start, end })
+  const entries = useQuery(api.menu.listByRange, { start, end });
 
   const entryMap = useMemo(() => {
-    const map = new Map<string, Doc<"menuEntries">>()
+    const map = new Map<string, Doc<"menuEntries">>();
     for (const entry of entries ?? []) {
-      map.set(`${entry.date}|${entry.persona}|${entry.slot}`, entry)
+      map.set(`${entry.date}|${entry.persona}|${entry.slot}`, entry);
     }
-    return map
-  }, [entries])
+    return map;
+  }, [entries]);
 
   const getEntry = (dateKey: string, personaKey: Persona, slot: MealSlot) =>
-    entryMap.get(`${dateKey}|${personaKey}|${slot}`)
+    entryMap.get(`${dateKey}|${personaKey}|${slot}`);
 
   const periodLabel =
     view === "day"
       ? formatDay(anchor)
       : view === "week"
         ? formatWeekRange(startOfWeek(anchor))
-        : formatMonthYear(anchor)
+        : formatMonthYear(anchor);
 
   const shift = (direction: 1 | -1) => {
     if (view === "day") {
-      setAnchor((current) => addDays(current, direction))
+      setAnchor((current) => addDays(current, direction));
     } else if (view === "week") {
-      setAnchor((current) => addDays(current, 7 * direction))
+      setAnchor((current) => addDays(current, 7 * direction));
     } else {
-      setAnchor((current) => addMonths(current, direction))
+      setAnchor((current) => addMonths(current, direction));
     }
-  }
+  };
 
   const openDay = (date: Date) => {
-    setAnchor(date)
-    setView("day")
-  }
+    setAnchor(date);
+    setView("day");
+  };
+
+  const sendToTelegram = useAction(api.telegram.sendDailyMenu);
+
+  const telegramSend = useQuery(
+    api.telegram.getLatestSend,
+    view === "day" ? { date: start } : "skip",
+  );
+
+  const handleSendToTelegram = async () => {
+    if (entries === undefined) return;
+    if (entries.length === 0) return;
+
+    setSending(true);
+    setTelegramAlert(null);
+    try {
+      const { sentAt } = await sendToTelegram({ date: start });
+      setTelegramAlert({
+        success: true,
+        message: `Menu for ${periodLabel} was sent to Telegram (${formatTimestamp(sentAt)}).`,
+      });
+    } catch (error) {
+      setTelegramAlert({
+        error: true,
+        message:
+          error instanceof Error
+            ? error.message
+            : "Failed to send the menu to Telegram",
+      });
+    } finally {
+      setSending(false);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-y-6">
@@ -158,7 +199,7 @@ export function MenuDailyView() {
         <div
           role="group"
           aria-label="Menu view"
-          className="flex gap-1 rounded border-2 bg-card p-1"
+          className="bg-card flex gap-1 rounded border-2 p-1"
         >
           {VIEW_OPTIONS.map((option) => (
             <button
@@ -170,7 +211,7 @@ export function MenuDailyView() {
                 chipClassName,
                 "border-transparent px-3 py-1",
                 view === option.value
-                  ? "border-black bg-primary text-primary-foreground shadow-sm"
+                  ? "bg-primary text-primary-foreground border-black shadow-sm"
                   : "hover:bg-accent",
               )}
             >
@@ -190,7 +231,7 @@ export function MenuDailyView() {
           </Button>
           <p
             aria-live="polite"
-            className="min-w-44 text-center font-head text-sm font-semibold"
+            className="font-head min-w-44 text-center text-sm font-semibold"
           >
             {periodLabel}
           </p>
@@ -213,17 +254,47 @@ export function MenuDailyView() {
       </div>
 
       {entries === undefined ? (
-        <div className="rounded border-2 bg-muted/50 px-4 py-3 text-sm text-muted-foreground">
+        <div className="bg-muted/50 text-muted-foreground rounded border-2 px-4 py-3 text-sm">
           Loading menu…
         </div>
       ) : view === "day" ? (
         <>
-          <div className="flex items-start gap-2 rounded border-2 bg-muted/50 px-4 py-3 text-sm text-muted-foreground">
+          <div className="bg-muted/50 text-muted-foreground flex items-start gap-2 rounded border-2 px-4 py-3 text-sm">
             <Info className="mt-0.5 size-4 shrink-0" aria-hidden />
             <p>
               Cooking happens once in the morning — lunch comes from the same
               batch, so it keeps until the afternoon.
             </p>
+          </div>
+
+          {telegramAlert && <Alert {...telegramAlert} />}
+
+          <div className="bg-muted/50 text-muted-foreground flex flex-wrap items-center justify-between gap-2 rounded border-2 px-4 py-3 text-sm">
+            <div className="flex items-center gap-2">
+              <Send className="size-4 shrink-0" aria-hidden />
+              {telegramSend ? (
+                <p>
+                  Last sent to Telegram · {formatTimestamp(telegramSend.sentAt)}
+                </p>
+              ) : (
+                <p className="italic">This day has not been sent yet</p>
+              )}
+            </div>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={
+                entries === undefined || sending || entries.length === 0
+              }
+              title={
+                entries !== undefined && entries.length === 0
+                  ? "Add menu slots on the create page before sending"
+                  : undefined
+              }
+              onClick={handleSendToTelegram}
+            >
+              {sending ? "Sending…" : "Send to Telegram"}
+            </Button>
           </div>
 
           <div
@@ -232,8 +303,8 @@ export function MenuDailyView() {
             className="flex flex-wrap gap-2"
           >
             {getWeekDates(anchor).map((date) => {
-              const isActive = isSameDay(date, anchor)
-              const isToday = isSameDay(date, today)
+              const isActive = isSameDay(date, anchor);
+              const isToday = isSameDay(date, today);
 
               return (
                 <button
@@ -245,31 +316,31 @@ export function MenuDailyView() {
                     chipClassName,
                     "relative",
                     isActive
-                      ? "border-black bg-primary text-primary-foreground shadow-sm"
-                      : "border-transparent hover:bg-accent",
+                      ? "bg-primary text-primary-foreground border-black shadow-sm"
+                      : "hover:bg-accent border-transparent",
                   )}
                 >
                   {formatDayShort(date)}
                   {isToday && !isActive && (
                     <span
-                      className="absolute top-1 right-1 size-1.5 rounded-full bg-primary"
+                      className="bg-primary absolute top-1 right-1 size-1.5 rounded-full"
                       aria-hidden
                     />
                   )}
                 </button>
-              )
+              );
             })}
           </div>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             {PERSONAS.map(
               ({ persona: personaKey, title, description, icon: Icon }) => {
-                const dateKey = toDateKey(anchor)
+                const dateKey = toDateKey(anchor);
 
                 return (
                   <Card key={personaKey} size="sm">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-2 font-head font-semibold">
+                      <CardTitle className="font-head flex items-center gap-2 font-semibold">
                         <Icon className="size-4" aria-hidden />
                         {title}
                       </CardTitle>
@@ -277,20 +348,20 @@ export function MenuDailyView() {
                     </CardHeader>
                     <CardContent className="flex flex-col">
                       {MEAL_SLOTS.map((slot, index) => {
-                        const entry = getEntry(dateKey, personaKey, slot)
-                        const SlotIcon = SLOT_ICONS[slot]
+                        const entry = getEntry(dateKey, personaKey, slot);
+                        const SlotIcon = SLOT_ICONS[slot];
 
                         return (
                           <div key={slot}>
                             {index > 0 && <Separator className="my-3" />}
                             <div className="flex items-start gap-3">
-                              <div className="flex size-9 shrink-0 items-center justify-center rounded border-2 bg-muted/50">
+                              <div className="bg-muted/50 flex size-9 shrink-0 items-center justify-center rounded border-2">
                                 <SlotIcon className="size-4" aria-hidden />
                               </div>
                               {entry ? (
                                 <div className="min-w-0 flex-1">
                                   <div className="flex items-start justify-between gap-2">
-                                    <p className="text-xs font-semibold text-muted-foreground">
+                                    <p className="text-muted-foreground text-xs font-semibold">
                                       {SLOT_LABELS[slot]}
                                     </p>
                                     {entry.status === "draft" && (
@@ -304,18 +375,18 @@ export function MenuDailyView() {
                                     )}
                                   </div>
                                   <p className="font-semibold">{entry.name}</p>
-                                  <p className="text-sm text-muted-foreground">
+                                  <p className="text-muted-foreground text-sm">
                                     {entry.ingredients.length > 0
                                       ? entry.ingredients.join(", ")
                                       : "No ingredients"}
                                   </p>
                                 </div>
                               ) : (
-                                <div className="min-w-0 flex-1 rounded border-2 border-dashed bg-muted/30 px-3 py-2">
-                                  <p className="text-xs font-semibold text-muted-foreground">
+                                <div className="bg-muted/30 min-w-0 flex-1 rounded border-2 border-dashed px-3 py-2">
+                                  <p className="text-muted-foreground text-xs font-semibold">
                                     {SLOT_LABELS[slot]}
                                   </p>
-                                  <p className="text-sm italic text-muted-foreground">
+                                  <p className="text-muted-foreground text-sm italic">
                                     Data is blank, you can add menu on create
                                     page
                                   </p>
@@ -329,11 +400,11 @@ export function MenuDailyView() {
                               )}
                             </div>
                           </div>
-                        )
+                        );
                       })}
                     </CardContent>
                   </Card>
-                )
+                );
               },
             )}
           </div>
@@ -351,8 +422,8 @@ export function MenuDailyView() {
                   chipClassName,
                   "flex items-center gap-2",
                   persona === personaKey
-                    ? "border-black bg-primary text-primary-foreground shadow-sm"
-                    : "border-transparent hover:bg-accent",
+                    ? "bg-primary text-primary-foreground border-black shadow-sm"
+                    : "hover:bg-accent border-transparent",
                 )}
               >
                 <Icon className="size-4" aria-hidden />
@@ -363,8 +434,8 @@ export function MenuDailyView() {
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
             {getWeekDates(anchor).map((date) => {
-              const dateKey = toDateKey(date)
-              const isToday = isSameDay(date, today)
+              const dateKey = toDateKey(date);
+              const isToday = isSameDay(date, today);
 
               return (
                 <Card
@@ -376,11 +447,11 @@ export function MenuDailyView() {
                   onClick={() => openDay(date)}
                   onKeyDown={(event) => {
                     if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault()
-                      openDay(date)
+                      event.preventDefault();
+                      openDay(date);
                     }
                   }}
-                  className="cursor-pointer transition-colors hover:bg-accent/50"
+                  className="hover:bg-accent/50 cursor-pointer transition-colors"
                 >
                   <CardHeader>
                     <CardTitle className="font-head text-sm font-semibold">
@@ -394,37 +465,37 @@ export function MenuDailyView() {
                   </CardHeader>
                   <CardContent className="flex flex-col gap-2">
                     {MEAL_SLOTS.map((slot) => {
-                      const SlotIcon = SLOT_ICONS[slot]
-                      const name = getEntry(dateKey, persona, slot)?.name
+                      const SlotIcon = SLOT_ICONS[slot];
+                      const name = getEntry(dateKey, persona, slot)?.name;
 
                       return (
                         <div key={slot} className="flex items-center gap-1.5">
                           <SlotIcon
-                            className="size-3 shrink-0 text-muted-foreground"
+                            className="text-muted-foreground size-3 shrink-0"
                             aria-hidden
                           />
                           <p
                             title={name ?? undefined}
                             className={cn(
                               "truncate text-xs leading-snug",
-                              !name && "italic text-muted-foreground",
+                              !name && "text-muted-foreground italic",
                             )}
                           >
                             {name ?? "blank"}
                           </p>
                         </div>
-                      )
+                      );
                     })}
                   </CardContent>
                 </Card>
-              )
+              );
             })}
           </div>
         </>
       ) : (
         <Card size="sm">
           <CardContent>
-            <div className="grid grid-cols-7 gap-1.5 text-center text-xs font-semibold text-muted-foreground">
+            <div className="text-muted-foreground grid grid-cols-7 gap-1.5 text-center text-xs font-semibold">
               {WEEKDAYS_SHORT.map((day) => (
                 <div key={day}>{day}</div>
               ))}
@@ -432,15 +503,15 @@ export function MenuDailyView() {
             <div className="mt-1.5 grid grid-cols-7 gap-1.5">
               {getMonthGrid(anchor).map((row, rowIndex) =>
                 row.map((date, cellIndex) => {
-                  const key = `${rowIndex}-${cellIndex}`
+                  const key = `${rowIndex}-${cellIndex}`;
 
                   if (!date) {
-                    return <div key={key} aria-hidden />
+                    return <div key={key} aria-hidden />;
                   }
 
-                  const dateKey = toDateKey(date)
-                  const name = getEntry(dateKey, "adult", "lunch")?.name
-                  const isToday = isSameDay(date, today)
+                  const dateKey = toDateKey(date);
+                  const name = getEntry(dateKey, "adult", "lunch")?.name;
+                  const isToday = isSameDay(date, today);
 
                   return (
                     <button
@@ -449,8 +520,9 @@ export function MenuDailyView() {
                       aria-label={`Open ${formatDay(date)} menu`}
                       onClick={() => openDay(date)}
                       className={cn(
-                        "flex min-h-20 flex-col items-start gap-1 rounded border-2 p-1.5 text-left transition-colors hover:bg-accent/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary",
-                        isToday && "bg-primary text-primary-foreground shadow-sm",
+                        "hover:bg-accent/50 focus-visible:outline-primary flex min-h-20 flex-col items-start gap-1 rounded border-2 p-1.5 text-left transition-colors focus-visible:outline-2 focus-visible:outline-offset-2",
+                        isToday &&
+                          "bg-primary text-primary-foreground shadow-sm",
                       )}
                     >
                       <span className="font-head text-xs font-bold">
@@ -459,13 +531,13 @@ export function MenuDailyView() {
                       {name && (
                         <span
                           title={name}
-                          className="line-clamp-2 text-[10px] leading-tight text-muted-foreground"
+                          className="text-muted-foreground line-clamp-2 text-[10px] leading-tight"
                         >
                           {name}
                         </span>
                       )}
                     </button>
-                  )
+                  );
                 }),
               )}
             </div>
@@ -473,5 +545,5 @@ export function MenuDailyView() {
         </Card>
       )}
     </div>
-  )
+  );
 }

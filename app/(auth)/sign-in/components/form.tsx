@@ -9,9 +9,11 @@ import { signInSchema, SignInType } from "@/schemas/signIn.schema";
 import FormField from "@/components/common/form-field";
 import Alert from "@/components/common/alert";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGoogle } from "react-icons/fa";
+import { LockIcon, MailIcon } from "lucide-react";
 
 type SignInFormProps = {
   redirectTo: string;
@@ -32,16 +34,13 @@ const OAUTH_ERROR_MESSAGES: Record<string, string> = {
 };
 
 const getOAuthErrorMessage = (code: string) =>
-  OAUTH_ERROR_MESSAGES[code] ?? `Sign-in failed. Please try again. (code: ${code})`;
-
-const inputStyles =
-  "border-2 border-black bg-input shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+  OAUTH_ERROR_MESSAGES[code] ??
+  `Sign-in failed. Please try again. (code: ${code})`;
 
 const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
   const router = useRouter();
   const [isPending, setIsPending] = useState(false);
   const [isGooglePending, setIsGooglePending] = useState(false);
-  const [isGithubPending, setIsGithubPending] = useState(false);
   const [isResendPending, setIsResendPending] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
   const [error, setError] = useState<string | undefined>(
@@ -86,13 +85,13 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
     router.refresh();
   };
 
-  const handleSocialSignIn = async (provider: "google" | "github") => {
+  const handleSocialSignIn = async (provider: "google") => {
     setError("");
     setSuccess("");
     if (provider === "google") {
       setIsGooglePending(true);
     } else {
-      setIsGithubPending(true);
+      null;
     }
     const { error } = await authClient.signIn.social({
       provider,
@@ -105,7 +104,7 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
       if (provider === "google") {
         setIsGooglePending(false);
       } else {
-        setIsGithubPending(false);
+        null;
       }
       setError(error.message ?? "Failed to start sign-in. Please try again.");
     }
@@ -142,27 +141,22 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
           onClick={() => handleSocialSignIn("google")}
         >
           <FaGoogle />
-          {isGooglePending ? "Redirecting to Google..." : "Continue with Google"}
-        </Button>
-        <Button
-          type="button"
-          variant="secondary"
-          className="w-full"
-          disabled={isGithubPending || isPending}
-          onClick={() => handleSocialSignIn("github")}
-        >
-          <FaGithub />
-          {isGithubPending ? "Redirecting to GitHub..." : "Continue with GitHub"}
+          {isGooglePending
+            ? "Redirecting to Google..."
+            : "Continue with Google"}
         </Button>
       </div>
 
       <div className="flex items-center gap-2">
         <Separator className="flex-1" />
-        <span className="text-sm text-muted-foreground">or</span>
+        <span className="text-muted-foreground text-sm">or</span>
         <Separator className="flex-1" />
       </div>
 
-      <form onSubmit={handleSubmit(handleSubmitForm)} className="w-full">
+      <form
+        onSubmit={handleSubmit(handleSubmitForm)}
+        className="flex w-full flex-col gap-4"
+      >
         <FormField
           id="email"
           label="Email"
@@ -171,7 +165,7 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
           placeholder="you@example.com"
           type="email"
           disabled={isPending}
-          inputClassName={inputStyles}
+          icon={<MailIcon />}
         />
         <FormField
           id="password"
@@ -181,20 +175,19 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
           placeholder="••••••••"
           type="password"
           disabled={isPending}
-          inputClassName={inputStyles}
+          icon={<LockIcon />}
+          passwordToggle
         />
 
-        <div className="my-2 flex items-center justify-between">
+        <div className="flex items-center justify-between">
           <label
             htmlFor="remember"
             className="flex cursor-pointer items-center gap-2 text-sm font-medium"
           >
-            <input
+            <Checkbox
               id="remember"
-              type="checkbox"
               checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="size-4 cursor-pointer appearance-none border-2 border-black bg-white shadow-xs checked:bg-primary"
+              onCheckedChange={(checked) => setRememberMe(checked)}
             />
             Remember me
           </label>
@@ -204,7 +197,7 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
           <Button
             type="button"
             variant="outline"
-            className="mb-2 w-full"
+            className="w-full"
             disabled={isResendPending}
             onClick={handleResendVerification}
           >
@@ -217,9 +210,12 @@ const SignInForm = ({ redirectTo, oauthError }: SignInFormProps) => {
         </Button>
       </form>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground text-center text-sm">
         Don&apos;t have an account?{" "}
-        <Link href="/sign-up" className="font-medium underline hover:text-foreground">
+        <Link
+          href="/sign-up"
+          className="hover:text-foreground font-medium underline"
+        >
           Sign up
         </Link>
       </p>

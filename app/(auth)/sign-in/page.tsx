@@ -13,10 +13,10 @@ const SignInPage = async ({ searchParams }: SignInPageProps) => {
   const { redirect, error } = await searchParams;
 
   return (
-    <div className="mx-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-lg border-2 border-black bg-card shadow-lg lg:h-[min(48rem,calc(100vh-4rem))] lg:flex-row">
+    <div className="bg-card mx-auto flex w-full max-w-5xl flex-col overflow-hidden rounded-lg border-2 border-black shadow-lg lg:h-[min(48rem,calc(100vh-4rem))] lg:flex-row">
       <div className="flex flex-1 flex-col justify-center p-6 sm:p-10">
         <h1 className="font-head text-3xl font-bold">Sign In</h1>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="text-muted-foreground mt-2 text-sm">
           Pick a provider, or use the email you signed up with.
         </p>
         <div className="mt-6">

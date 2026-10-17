@@ -9,6 +9,7 @@ import FormField from "@/components/common/form-field";
 import Alert from "@/components/common/alert";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { LockIcon, MailIcon, UserIcon } from "lucide-react";
 
 type SignUpFormProps = {
   redirectTo: string;
@@ -70,10 +71,12 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
       <div className="flex w-full flex-col gap-4">
         <div className="text-center">
           <h2 className="text-xl font-semibold">Check your inbox</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-2 text-sm">
             We sent a verification link to{" "}
-            <span className="font-medium text-foreground">{submittedEmail}</span>.
-            Click it to activate your account — you&apos;ll be signed in
+            <span className="text-foreground font-medium">
+              {submittedEmail}
+            </span>
+            . Click it to activate your account — you&apos;ll be signed in
             automatically afterwards.
           </p>
         </div>
@@ -88,9 +91,12 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
         >
           {isResendPending ? "Resending..." : "Resend verification email"}
         </Button>
-        <p className="text-center text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-center text-sm">
           Already verified?{" "}
-          <Link href="/sign-in" className="font-medium underline hover:text-foreground">
+          <Link
+            href="/sign-in"
+            className="hover:text-foreground font-medium underline"
+          >
             Sign in
           </Link>
         </p>
@@ -100,7 +106,10 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
 
   return (
     <div className="flex w-full flex-col gap-4">
-      <form onSubmit={handleSubmit(handleSubmitForm)} className="w-full">
+      <form
+        onSubmit={handleSubmit(handleSubmitForm)}
+        className="flex w-full flex-col gap-4"
+      >
         <FormField
           id="name"
           register={register}
@@ -108,6 +117,7 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
           placeholder="Input your name"
           type="text"
           disabled={isPending}
+          icon={<UserIcon />}
         />
         <FormField
           id="email"
@@ -116,6 +126,7 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
           placeholder="Input your email"
           type="email"
           disabled={isPending}
+          icon={<MailIcon />}
         />
         <FormField
           id="password"
@@ -124,6 +135,8 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
           placeholder="Input your password"
           type="password"
           disabled={isPending}
+          icon={<LockIcon />}
+          passwordToggle
         />
         <FormField
           id="confirmPassword"
@@ -132,6 +145,8 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
           placeholder="Confirm your password"
           type="password"
           disabled={isPending}
+          icon={<LockIcon />}
+          passwordToggle
         />
         {error && <Alert error message={error} />}
         {success && <Alert success message={success} />}
@@ -139,9 +154,12 @@ const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
           {isPending ? "Submitting..." : "Sign Up"}
         </Button>
       </form>
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="text-muted-foreground text-center text-sm">
         Already have an account?{" "}
-        <Link href="/sign-in" className="font-medium underline hover:text-foreground">
+        <Link
+          href="/sign-in"
+          className="hover:text-foreground font-medium underline"
+        >
           Sign in
         </Link>
       </p>

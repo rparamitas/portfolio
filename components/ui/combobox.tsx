@@ -1,14 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox"
-import { X } from "lucide-react"
+import * as React from "react";
+import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
+import { X } from "lucide-react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 // Root is re-exported (not wrapped) to keep the generic <Value, Multiple>
 // inference intact for controlled usage.
-const MultiSelect = ComboboxPrimitive.Root
+const MultiSelect = ComboboxPrimitive.Root;
+
+// Hook from Base UI exposing the filtered popup items. Aliased so consumers
+// (e.g. "no ingredient matches the typed query") don't need deep imports.
+const useMultiSelectFilteredItems = ComboboxPrimitive.useFilteredItems;
 
 function MultiSelectGroup({
   className,
@@ -18,12 +22,12 @@ function MultiSelectGroup({
     <ComboboxPrimitive.InputGroup
       data-slot="multi-select-group"
       className={cn(
-        "flex w-full flex-wrap items-center gap-1 rounded border-2 border-black bg-card px-2 py-1 text-sm shadow-sm transition-colors focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary",
+        "bg-card focus-within:outline-primary flex w-full flex-wrap items-center gap-1 rounded border-2 border-black px-2 py-1 text-sm shadow-sm transition-colors focus-within:outline-2 focus-within:outline-offset-2",
         className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectChips({
@@ -36,7 +40,7 @@ function MultiSelectChips({
       className={cn("flex flex-wrap items-center gap-1", className)}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectChip({
@@ -47,12 +51,12 @@ function MultiSelectChip({
     <ComboboxPrimitive.Chip
       data-slot="multi-select-chip"
       className={cn(
-        "inline-flex items-center gap-1 rounded border-2 border-black bg-muted px-1.5 py-0.5 text-xs font-medium",
+        "bg-muted inline-flex items-center gap-1 rounded border-2 border-black px-1.5 py-0.5 text-xs font-medium",
         className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectChipRemove({
@@ -64,14 +68,14 @@ function MultiSelectChipRemove({
     <ComboboxPrimitive.ChipRemove
       data-slot="multi-select-chip-remove"
       className={cn(
-        "flex size-4 cursor-pointer items-center justify-center rounded-sm transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-primary",
+        "hover:bg-accent focus-visible:outline-primary flex size-4 cursor-pointer items-center justify-center rounded-sm transition-colors focus-visible:outline-2",
         className,
       )}
       {...props}
     >
       {children ?? <X className="size-3" aria-hidden />}
     </ComboboxPrimitive.ChipRemove>
-  )
+  );
 }
 
 function MultiSelectInput({
@@ -82,23 +86,20 @@ function MultiSelectInput({
     <ComboboxPrimitive.Input
       data-slot="multi-select-input"
       className={cn(
-        "min-w-24 flex-1 bg-transparent py-0.5 outline-none placeholder:text-muted-foreground",
+        "placeholder:text-muted-foreground min-w-24 flex-1 bg-transparent py-0.5 outline-none",
         className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectPortal({
   ...props
 }: React.ComponentProps<typeof ComboboxPrimitive.Portal>) {
   return (
-    <ComboboxPrimitive.Portal
-      data-slot="multi-select-portal"
-      {...props}
-    />
-  )
+    <ComboboxPrimitive.Portal data-slot="multi-select-portal" {...props} />
+  );
 }
 
 function MultiSelectPositioner({
@@ -112,7 +113,7 @@ function MultiSelectPositioner({
       className={cn("z-50 outline-none", className)}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectPopup({
@@ -123,12 +124,12 @@ function MultiSelectPopup({
     <ComboboxPrimitive.Popup
       data-slot="multi-select-popup"
       className={cn(
-        "max-h-64 w-(--positioner-width) overflow-y-auto rounded border-2 border-black bg-card text-card-foreground shadow-lg",
+        "bg-card text-card-foreground max-h-64 w-(--positioner-width) overflow-y-auto rounded border-2 border-black shadow-lg",
         className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectList({
@@ -141,7 +142,7 @@ function MultiSelectList({
       className={cn("flex flex-col p-1", className)}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectItem({
@@ -152,12 +153,12 @@ function MultiSelectItem({
     <ComboboxPrimitive.Item
       data-slot="multi-select-item"
       className={cn(
-        "cursor-pointer rounded px-2 py-1.5 text-sm outline-none transition-colors data-highlighted:bg-accent data-selected:font-semibold",
+        "data-highlighted:bg-accent cursor-pointer rounded px-2 py-1.5 text-sm transition-colors outline-none data-selected:font-semibold",
         className,
       )}
       {...props}
     />
-  )
+  );
 }
 
 function MultiSelectEmpty({
@@ -167,14 +168,15 @@ function MultiSelectEmpty({
   return (
     <ComboboxPrimitive.Empty
       data-slot="multi-select-empty"
-      className={cn("px-2 py-1.5 text-sm text-muted-foreground", className)}
+      className={cn("text-muted-foreground px-2 py-1.5 text-sm", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
   MultiSelect,
+  useMultiSelectFilteredItems,
   MultiSelectGroup,
   MultiSelectChips,
   MultiSelectChip,
@@ -186,4 +188,4 @@ export {
   MultiSelectList,
   MultiSelectItem,
   MultiSelectEmpty,
-}
+};

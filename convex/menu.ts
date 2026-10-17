@@ -1,10 +1,10 @@
-import { v } from "convex/values"
+import { v } from "convex/values";
 
-import { ALL_INGREDIENTS } from "../data/menu"
-import { authComponent } from "./auth"
-import { mutation, query, type MutationCtx } from "./_generated/server"
+import { ALL_INGREDIENTS } from "../data/menu";
+import { authComponent } from "./auth";
+import { mutation, query, type MutationCtx } from "./_generated/server";
 
-const personaValidator = v.union(v.literal("adult"), v.literal("children"))
+const personaValidator = v.union(v.literal("adult"), v.literal("children"));
 
 const slotValidator = v.union(
   v.literal("breakfast"),
@@ -12,80 +12,77 @@ const slotValidator = v.union(
   v.literal("lunch"),
   v.literal("snack-afternoon"),
   v.literal("dinner"),
-)
+);
 
-const statusValidator = v.union(
-  v.literal("draft"),
-  v.literal("published"),
-)
+const statusValidator = v.union(v.literal("draft"), v.literal("published"));
 
 async function requireAuth(ctx: MutationCtx) {
-  const user = await authComponent.safeGetAuthUser(ctx)
+  const user = await authComponent.safeGetAuthUser(ctx);
   if (!user) {
-    throw new Error("Unauthenticated — please sign in first")
+    throw new Error("Unauthenticated — please sign in first");
   }
-  return user
+  return user;
 }
 
 export const listIngredients = query({
   args: {},
   handler: async (ctx) => {
-    return ctx.db.query("ingredients").withIndex("name").order("asc").collect()
+    return ctx.db.query("ingredients").withIndex("name").order("asc").collect();
   },
-})
+});
 
 export const seedIngredients = mutation({
   args: {},
   handler: async (ctx) => {
     const existing = new Set(
       (await ctx.db.query("ingredients").collect()).map((item) => item.name),
-    )
-    let added = 0
+    );
+    let added = 0;
     for (const name of ALL_INGREDIENTS) {
       if (!existing.has(name)) {
-        await ctx.db.insert("ingredients", { name })
-        added++
+        await ctx.db.insert("ingredients", { name });
+        added++;
       }
     }
-    return { added, total: existing.size + added }
+    return { added, total: existing.size + added };
   },
-})
+});
 
 // Manual maintenance utility: run with `bunx convex run menu:reseedIngredients`
 // to replace all ingredients with the template list (e.g. after renaming).
 export const reseedIngredients = mutation({
   args: {},
   handler: async (ctx) => {
-    const existing = await ctx.db.query("ingredients").collect()
+    const existing = await ctx.db.query("ingredients").collect();
     for (const item of existing) {
-      await ctx.db.delete(item._id)
+      await ctx.db.delete(item._id);
     }
     for (const name of ALL_INGREDIENTS) {
-      await ctx.db.insert("ingredients", { name })
+      await ctx.db.insert("ingredients", { name });
     }
-    return { total: ALL_INGREDIENTS.length }
+    return { total: ALL_INGREDIENTS.length };
   },
-})
+});
 
 export const addIngredient = mutation({
   args: { name: v.string() },
   handler: async (ctx, args) => {
-    await requireAuth(ctx)
-    const name = args.name.trim()
+    await requireAuth(ctx);
+    const name = args.name.trim();
     if (!name) {
-      throw new Error("Ingredient name is empty")
+      throw new Error("Ingredient name is empty");
     }
     const existing = await ctx.db
       .query("ingredients")
       .withIndex("name", (q) => q.eq("name", name))
-      .unique()
+      .unique();
     if (existing) {
-      return { id: existing._id, name: existing.name, created: false }
+      return { id: existing._id, name: existing.name, created: false };
     }
-    const id = await ctx.db.insert("ingredients", { name })
-    return { id, name, created: true }
+    const id = await ctx.db.insert("ingredients", { name });
+    return { id, name, created: true };
   },
-})
+});
 
 export const listByRange = query({
   args: { start: v.string(), end: v.string() },
@@ -95,9 +92,9 @@ export const listByRange = query({
       .withIndex("by_date", (q) =>
         q.gte("date", args.start).lte("date", args.end),
       )
-      .collect()
+      .collect();
   },
-})
+});
 
 export const saveEntries = mutation({
   args: {
@@ -113,10 +110,10 @@ export const saveEntries = mutation({
     ),
   },
   handler: async (ctx, args) => {
-    await requireAuth(ctx)
-    const now = Date.now()
-    let saved = 0
-    let deleted = 0
+    await requireAuth(ctx);
+    const now = Date.now();
+    let saved = 0;
+    let deleted = 0;
 
     for (const entry of args.entries) {
       const existing = await ctx.db
@@ -127,16 +124,16 @@ export const saveEntries = mutation({
             .eq("persona", entry.persona)
             .eq("slot", entry.slot),
         )
-        .unique()
+        .unique();
 
-      const name = entry.name.trim()
+      const name = entry.name.trim();
 
       if (!name) {
         if (existing) {
-          await ctx.db.delete(existing._id)
-          deleted++
+          await ctx.db.delete(existing._id);
+          deleted++;
         }
-        continue
+        continue;
       }
 
       if (existing) {
@@ -145,7 +142,7 @@ export const saveEntries = mutation({
           ingredients: entry.ingredients,
           status: entry.status,
           updatedAt: now,
-        })
+        });
       } else {
         await ctx.db.insert("menuEntries", {
           date: entry.date,
@@ -155,11 +152,11 @@ export const saveEntries = mutation({
           ingredients: entry.ingredients,
           status: entry.status,
           updatedAt: now,
-        })
+        });
       }
-      saved++
+      saved++;
     }
 
-    return { saved, deleted }
+    return { saved, deleted };
   },
-})
+});

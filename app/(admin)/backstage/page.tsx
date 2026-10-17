@@ -1,10 +1,10 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { DashboardContent } from "@/components/backstage/dashboard"
+import { DashboardContent } from "@/components/backstage/dashboard";
 
 export const metadata: Metadata = {
   title: "Backstage",
-}
+};
 
 const BackstagePage = () => {
   return (
@@ -17,7 +17,7 @@ const BackstagePage = () => {
       </header>
       <DashboardContent />
     </>
-  )
-}
+  );
+};
 
-export default BackstagePage
+export default BackstagePage;

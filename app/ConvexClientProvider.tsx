@@ -14,11 +14,7 @@ const providerAuthClient = authClient as unknown as ComponentProps<
   typeof ConvexBetterAuthProvider
 >["authClient"];
 
-const ConvexClientProvider = ({
-  children,
-}: {
-  children: ReactNode;
-}) => {
+const ConvexClientProvider = ({ children }: { children: ReactNode }) => {
   return (
     <ConvexBetterAuthProvider client={convex} authClient={providerAuthClient}>
       {children}

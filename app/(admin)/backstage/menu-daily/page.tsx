@@ -1,12 +1,12 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from "next";
+import Link from "next/link";
 
-import { MenuDailyView } from "@/components/backstage/menu-daily"
-import { Button } from "@/components/ui/button"
+import { MenuDailyView } from "@/components/backstage/menu-daily";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "Menu Daily",
-}
+};
 
 const MenuDailyPage = () => {
   return (
@@ -27,7 +27,7 @@ const MenuDailyPage = () => {
       </header>
       <MenuDailyView />
     </>
-  )
-}
+  );
+};
 
-export default MenuDailyPage
+export default MenuDailyPage;

@@ -1,10 +1,20 @@
-import { cn } from "@/lib/utils";
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 import {
   FieldErrors,
   Path,
   UseFormRegister,
   FieldValues,
 } from "react-hook-form";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { cn } from "@/lib/utils";
 
 interface FormFieldProps<T extends FieldValues> {
   id: string;
@@ -12,9 +22,13 @@ interface FormFieldProps<T extends FieldValues> {
   disabled?: boolean;
   label?: string;
   placeholder?: string;
-  inputClassName?: string;
+  className?: string;
   register: UseFormRegister<T>;
   errors: FieldErrors;
+  /** Leading addon icon rendered inside the input group. */
+  icon?: ReactNode;
+  /** Adds a show/hide toggle addon (for password fields). */
+  passwordToggle?: boolean;
 }
 
 const FormField = <T extends FieldValues>({
@@ -23,11 +37,16 @@ const FormField = <T extends FieldValues>({
   disabled,
   placeholder,
   label,
-  inputClassName,
+  className,
   register,
   errors,
+  icon,
+  passwordToggle = false,
 }: FormFieldProps<T>) => {
   const message = errors[id] && (errors[id]?.message as string);
+  const [showPassword, setShowPassword] = useState(false);
+  const inputType =
+    passwordToggle && type === "password" && showPassword ? "text" : type;
 
   return (
     <div>
@@ -39,18 +58,34 @@ const FormField = <T extends FieldValues>({
           {label}
         </label>
       )}
-      <input
-        type={type}
-        id={id}
-        disabled={disabled}
-        placeholder={placeholder}
+      <InputGroup
         className={cn(
-          "my-2 w-full rounded-md border border-slate-300 p-3 outline-none disabled:cursor-not-allowed disabled:opacity-70 dark:border-slate-700",
-          errors[id] && "border-red-500",
-          inputClassName,
+          "h-11 border-black shadow-xs",
+          errors[id] && "border-destructive",
+          className,
         )}
-        {...register(id as Path<T>)}
-      />
+      >
+        <InputGroupInput
+          id={id}
+          type={inputType}
+          disabled={disabled}
+          placeholder={placeholder}
+          {...register(id as Path<T>)}
+        />
+        {icon && <InputGroupAddon align="inline-start">{icon}</InputGroupAddon>}
+        {passwordToggle && type === "password" && (
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              size="icon-xs"
+              variant="ghost"
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              onClick={() => setShowPassword((visible) => !visible)}
+            >
+              {showPassword ? <EyeOffIcon /> : <EyeIcon />}
+            </InputGroupButton>
+          </InputGroupAddon>
+        )}
+      </InputGroup>
       {message && <p className="mt-1 text-sm text-red-500">{message}</p>}
     </div>
   );

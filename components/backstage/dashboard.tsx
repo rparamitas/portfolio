@@ -6,25 +6,25 @@ import {
   Star,
   Users,
   type LucideIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
+import { cn } from "@/lib/utils";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 
 interface Stat {
-  id: number
-  title: string
-  value: string
-  delta: string
-  trend: "up" | "down"
-  icon: LucideIcon
+  id: number;
+  title: string;
+  value: string;
+  delta: string;
+  trend: "up" | "down";
+  icon: LucideIcon;
 }
 
 const stats: Stat[] = [
@@ -60,14 +60,14 @@ const stats: Stat[] = [
     trend: "down",
     icon: Star,
   },
-]
+];
 
 interface Activity {
-  id: number
-  title: string
-  category: string
-  status: "In Progress" | "Shipped" | "Review"
-  date: string
+  id: number;
+  title: string;
+  category: string;
+  status: "In Progress" | "Shipped" | "Review";
+  date: string;
 }
 
 const activities: Activity[] = [
@@ -106,13 +106,13 @@ const activities: Activity[] = [
     status: "Review",
     date: "Aug 28, 2026",
   },
-]
+];
 
 const statusVariant = {
   "In Progress": "default",
   Review: "secondary",
   Shipped: "outline",
-} as const
+} as const;
 
 export function DashboardContent() {
   return (
@@ -125,7 +125,10 @@ export function DashboardContent() {
                 <CardDescription className="font-head font-semibold">
                   {stat.title}
                 </CardDescription>
-                <stat.icon className="size-4 text-muted-foreground" aria-hidden />
+                <stat.icon
+                  className="text-muted-foreground size-4"
+                  aria-hidden
+                />
               </div>
               <CardTitle className="text-3xl font-bold">{stat.value}</CardTitle>
             </CardHeader>
@@ -144,7 +147,7 @@ export function DashboardContent() {
                   <ArrowDownRight className="size-3" aria-hidden />
                 )}
                 {stat.delta}
-                <span className="font-normal text-muted-foreground">
+                <span className="text-muted-foreground font-normal">
                   vs last month
                 </span>
               </p>
@@ -178,5 +181,5 @@ export function DashboardContent() {
         </div>
       </section>
     </div>
-  )
+  );
 }
