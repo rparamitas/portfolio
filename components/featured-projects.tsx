@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import Image, { StaticImageData } from "next/image";
-import React from "react";
 import defaultImage from "@/public/my-photo.png";
 
 interface DataFeaturedProjects {

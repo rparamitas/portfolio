@@ -1,0 +1,170 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema, SignUpType } from "@/schemas/signUp.schema";
+import FormField from "@/components/common/form-field";
+import Alert from "@/components/common/alert";
+import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth-client";
+import { LockIcon, MailIcon, UserIcon } from "lucide-react";
+
+type SignUpFormProps = {
+  redirectTo: string;
+};
+
+const SignUpForm = ({ redirectTo }: SignUpFormProps) => {
+  const [isPending, setIsPending] = useState(false);
+  const [isResendPending, setIsResendPending] = useState(false);
+  const [error, setError] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [submittedEmail, setSubmittedEmail] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpType>({
+    resolver: zodResolver(signUpSchema),
+  });
+
+  const handleSubmitForm: SubmitHandler<SignUpType> = async (data) => {
+    setError("");
+    setSuccess("");
+    setIsPending(true);
+    const { error } = await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
+    setIsPending(false);
+
+    if (error) {
+      setError(error.message ?? "Failed to sign up. Please try again.");
+      return;
+    }
+    // Email verification is required before the session becomes active.
+    setSubmittedEmail(data.email);
+  };
+
+  const handleResendVerification = async () => {
+    if (!submittedEmail) return;
+    setIsResendPending(true);
+    const { error } = await authClient.sendVerificationEmail({
+      email: submittedEmail,
+      callbackURL: redirectTo,
+    });
+    setIsResendPending(false);
+
+    if (error) {
+      setError(error.message ?? "Failed to resend the verification email.");
+      return;
+    }
+    setError("");
+    setSuccess("Verification email sent. Please check your inbox.");
+  };
+
+  if (submittedEmail) {
+    return (
+      <div className="flex w-full flex-col gap-4">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold">Check your inbox</h2>
+          <p className="text-muted-foreground mt-2 text-sm">
+            We sent a verification link to{" "}
+            <span className="text-foreground font-medium">
+              {submittedEmail}
+            </span>
+            . Click it to activate your account — you&apos;ll be signed in
+            automatically afterwards.
+          </p>
+        </div>
+        {error && <Alert error message={error} />}
+        {success && <Alert success message={success} />}
+        <Button
+          type="button"
+          variant="secondary"
+          className="w-full"
+          disabled={isResendPending}
+          onClick={handleResendVerification}
+        >
+          {isResendPending ? "Resending..." : "Resend verification email"}
+        </Button>
+        <p className="text-muted-foreground text-center text-sm">
+          Already verified?{" "}
+          <Link
+            href="/sign-in"
+            className="hover:text-foreground font-medium underline"
+          >
+            Sign in
+          </Link>
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex w-full flex-col gap-4">
+      <form
+        onSubmit={handleSubmit(handleSubmitForm)}
+        className="flex w-full flex-col gap-4"
+      >
+        <FormField
+          id="name"
+          register={register}
+          errors={errors}
+          placeholder="Input your name"
+          type="text"
+          disabled={isPending}
+          icon={<UserIcon />}
+        />
+        <FormField
+          id="email"
+          register={register}
+          errors={errors}
+          placeholder="Input your email"
+          type="email"
+          disabled={isPending}
+          icon={<MailIcon />}
+        />
+        <FormField
+          id="password"
+          register={register}
+          errors={errors}
+          placeholder="Input your password"
+          type="password"
+          disabled={isPending}
+          icon={<LockIcon />}
+          passwordToggle
+        />
+        <FormField
+          id="confirmPassword"
+          register={register}
+          errors={errors}
+          placeholder="Confirm your password"
+          type="password"
+          disabled={isPending}
+          icon={<LockIcon />}
+          passwordToggle
+        />
+        {error && <Alert error message={error} />}
+        {success && <Alert success message={success} />}
+        <Button type="submit" className="w-full" disabled={isPending}>
+          {isPending ? "Submitting..." : "Sign Up"}
+        </Button>
+      </form>
+      <p className="text-muted-foreground text-center text-sm">
+        Already have an account?{" "}
+        <Link
+          href="/sign-in"
+          className="hover:text-foreground font-medium underline"
+        >
+          Sign in
+        </Link>
+      </p>
+    </div>
+  );
+};
+
+export default SignUpForm;

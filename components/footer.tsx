@@ -1,152 +1,183 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronRight, GitCompareArrows, MapPin } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
 
-import { josefinSans } from "@/app/font";
-import { listPage } from "@/config/site";
+import { listPage, siteConfig } from "@/config/site";
 import { cn } from "@/lib/utils";
+import rahmitaPhoto from "@/public/rahmita.png";
 
-import { Separator } from "./ui/separator";
-import { Instagram, LinkedIn } from "./ui/icon";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
+import { services } from "./services-carousel";
 
-export const Logo = () => {
+// The typeface is supplied by the caller: the header renders the wordmark in
+// the display face. Passing the font in avoids `cn()` having to out-rank a
+// next/font class by stylesheet order. (The rebuilt footer has its own brand
+// block below, so this component now serves the header.)
+export const Logo = ({ className }: { className?: string }) => {
   return (
     <div className="flex items-center justify-center">
-      <p
-        className={cn(josefinSans.className, "text-2xl font-bold md:text-4xl")}
-      >
-        Rahmita
-      </p>
+      <p className={cn("text-2xl font-bold md:text-4xl", className)}>Rahmita</p>
     </div>
   );
 };
 
+const socials = [
+  {
+    href: siteConfig.links.instagram,
+    label: `Rahmita on Instagram`,
+    Icon: Instagram,
+  },
+  {
+    href: siteConfig.links.linkedin,
+    label: `Rahmita on LinkedIn`,
+    Icon: Linkedin,
+  },
+  {
+    href: `mailto:${siteConfig.email}`,
+    label: `Email ${siteConfig.email}`,
+    Icon: Mail,
+  },
+];
+
+// Square neobrutalism buttons: lift on hover, press back down on click.
+const socialLinkClass =
+  "inline-flex size-11 items-center justify-center rounded border-2 border-border bg-card shadow-md transition-[translate,box-shadow,background-color] duration-200 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:bg-primary hover:shadow-lg active:translate-x-1 active:translate-y-1 active:shadow-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+
+const headingClass = "mb-6 font-head text-xl tracking-wide uppercase";
+
+const navLinkClass =
+  "rounded decoration-primary decoration-2 underline-offset-4 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary";
+
 const Footer = () => {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 768);
   const pathname = usePathname();
 
   if (!listPage.map((item) => item.url).includes(pathname)) {
     return null;
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 768);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
   return (
-    <div className="my-12 flex items-center justify-center">
-      <div className="container flex flex-col gap-y-8">
-        <div className="flex flex-col justify-between gap-x-8 gap-y-3 md:flex-row md:gap-y-0">
-          <div className="basis-1/3 text-wrap px-4 text-3xl font-semibold md:px-0">
-            Please feel free to get in touch with us
-          </div>
-          <div className="group/item group flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border hover:border-main">
-            <div>
-              <MapPin className="text-main" size={36} />
-            </div>
-            <div className="flex w-full flex-col gap-y-1">
-              <p className="py-1 text-lg font-semibold">Our Location</p>
-              <p
-                className="hover:cursor-pointer hover:underline"
-                onClick={() =>
-                  window.open(
-                    "https://maps.app.goo.gl/wRw4grjyeUpgTi5aA",
-                    "_blank",
-                  )
-                }
-              >
-                Burangkeng, Jawa Barat, Indonesia
-              </p>
-            </div>
-          </div>
-          <div className="group/item flex basis-1/3 flex-row gap-5 border border-transparent p-2 hover:border hover:border-main">
-            <div>
-              <GitCompareArrows className="text-main" size={36} />
-            </div>
-            <div className="flex w-full flex-col gap-y-1">
-              <p className="py-1 text-lg font-semibold">How Can We Help?</p>
-              <ul className="flex flex-col gap-y-1">
-                <li
-                  className="group/link flex -translate-x-6 transition-all hover:-translate-x-3 hover:cursor-pointer hover:underline"
-                  onClick={() =>
-                    window.open("mailto:rparamitas@gmail.com", "_self")
-                  }
-                >
-                  <span className="invisible mr-0.5 flex items-center transition-all delay-100 group-hover/link:visible group-hover/link:translate-x-1">
-                    <ChevronRight className="size-5 h-fit" />
-                  </span>
-                  rparamitas@gmail.com
-                </li>
-                <li
-                  className="group/link flex -translate-x-6 transition-all hover:-translate-x-3 hover:cursor-pointer hover:underline"
-                  onClick={() =>
-                    window.open(
-                      "https://www.linkedin.com/in/rahmita-paramita-763822154/",
-                      "_blank",
-                    )
-                  }
-                >
-                  <span className="invisible mr-0.5 flex items-center transition-all delay-100 group-hover/link:visible group-hover/link:translate-x-1">
-                    <ChevronRight className="size-5 h-fit" />
-                  </span>
-                  @Rahmita Paramita
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <Separator orientation="horizontal" />
-        <div className="container flex items-center justify-between px-8 md:px-0">
-          <Logo />
-          {isSmallScreen ? (
-            <p className="flex items-center justify-center">Made with ♥️</p>
-          ) : (
-            <p className="flex items-center justify-center">
-              Made with ♥️ from Indonesia | 2025 Rahmita
+    <footer
+      aria-label="Site footer"
+      className="border-border bg-background border-t-2"
+    >
+      <div className="container mx-auto max-w-6xl px-4 py-16">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-5">
+          {/* Brand: mark, blurb, then the social buttons. */}
+          <div className="lg:col-span-2">
+            <Link
+              href="/"
+              className="focus-visible:outline-primary mb-3 inline-flex items-center gap-3 rounded focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              <span className="bg-primary border-border inline-flex size-11 shrink-0 items-center justify-center overflow-hidden rounded border-2 shadow-sm">
+                {/* The portrait is an RGBA cutout, so `object-contain`
+                    lets the primary colour frame it. */}
+                <Image
+                  src={rahmitaPhoto}
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="size-9 object-contain"
+                />
+              </span>
+              <span className="font-head text-3xl">Rahmita</span>
+            </Link>
+            <p className="text-muted-foreground mb-8 max-w-sm text-sm leading-relaxed">
+              Formulation specialist turning ideas into market-ready cosmetic
+              products. Based in Burangkeng, Jawa Barat, Indonesia.
             </p>
-          )}
-          <div className="flex flex-row space-x-4">
-            <Tooltip>
-              <TooltipTrigger>
-                <Instagram
-                  className="size-8 rounded-sm p-1 hover:cursor-pointer hover:bg-gray-50"
-                  onClick={() =>
-                    window.open(
-                      "https://www.instagram.com/rahmitaaps",
-                      "_blank",
-                    )
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>Instagram</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger>
-                <LinkedIn
-                  className="size-8 rounded-sm p-1 hover:cursor-pointer hover:bg-gray-50"
-                  onClick={() =>
-                    window.open(
-                      "https://www.linkedin.com/in/rahmita-paramita-763822154/",
-                      "_blank",
-                    )
-                  }
-                />
-              </TooltipTrigger>
-              <TooltipContent>LinkedIn</TooltipContent>
-            </Tooltip>
+            <ul className="flex flex-wrap gap-3">
+              {socials.map(({ href, label, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    aria-label={label}
+                    {...(href.startsWith("mailto:")
+                      ? {}
+                      : { target: "_blank", rel: "noopener noreferrer" })}
+                    className={socialLinkClass}
+                  >
+                    <Icon className="size-5" aria-hidden="true" />
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
+
+          {/* Explore: the same top-level pages as the navbar. */}
+          <nav aria-label="Explore">
+            <p className={headingClass}>Explore</p>
+            <ul className="space-y-2">
+              {listPage.map((item) => (
+                <li key={item.url}>
+                  <Link href={item.url} className={navLinkClass}>
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Services: the titles come from the home-page carousel so the two
+              sections can never drift apart; each link lands on the carousel
+              section via the /#services anchor. */}
+          <nav aria-label="Services">
+            <p className={headingClass}>Services</p>
+            <ul className="space-y-2">
+              {services.map((service) => (
+                <li key={service.id}>
+                  <Link href="/#services" className={navLinkClass}>
+                    {service.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* Get in touch */}
+          <nav aria-label="Get in touch">
+            <p className={headingClass}>Get in touch</p>
+            <ul className="space-y-2">
+              <li>
+                <a href={`mailto:${siteConfig.email}`} className={navLinkClass}>
+                  {siteConfig.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.links.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={navLinkClass}
+                >
+                  WhatsApp
+                </a>
+              </li>
+              <li>
+                <a
+                  href={siteConfig.links.maps}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={navLinkClass}
+                >
+                  Burangkeng, Jawa Barat, Indonesia
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </div>
-    </div>
+
+      <div className="text-primary-foreground border-border bg-primary border-t-2">
+        <div className="container mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-4 text-sm md:flex-row">
+          <p className="font-medium">
+            © {new Date().getFullYear()} {siteConfig.name}. All rights reserved.
+          </p>
+          <p>Made with ♥️ from Indonesia</p>
+        </div>
+      </div>
+    </footer>
   );
 };
 
